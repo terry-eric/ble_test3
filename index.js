@@ -11,7 +11,10 @@ function log(text) {
 
 async function onStartButtonClick() {
   // add new
-  let serviceUuid = parseInt("00000000-0001-11e1-9ab4-0002a5d5c51b");
+  let serviceUuid = "00000000-0001-11e1-9ab4-0002a5d5c51b";
+  if (serviceUuid.startsWith('0x')) {
+    parseInt(serviceUuid);
+  }
   let batteryUuid = parseInt("0x00020000-0001-11e1-ac36-0002a5d5c51b");
   let AcceleromterUuid = parseInt("0x00800000-0001-11e1-ac36-0002a5d5c51b");
 
