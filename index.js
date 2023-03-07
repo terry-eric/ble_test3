@@ -74,7 +74,7 @@ function handleNotifications(event) {
   }
   // log('> ' + a.join(' '));
   let d = battery_func(value)
-  log(event);
+  log(value);
   // log(JSON.stringify(d));
 
 }
