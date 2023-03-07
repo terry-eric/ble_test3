@@ -36,7 +36,7 @@ async function onStartButtonClick() {
 
     // add new
     await battery_Characteristic.startNotifications();
-    await Acceleromter_Characteristic.startNotifications();
+    // await Acceleromter_Characteristic.startNotifications();
 
     log('> Notifications started');
     // add new
@@ -65,7 +65,6 @@ async function onStartButtonClick() {
 
 function handleNotifications(event) {
   let value = event.target.value;
-  log(event.target);
   let a = [];
   // Convert raw data bytes to hex values just for the sake of showing something.
   // In the "real" world, you'd use data.getUint8, data.getUint16 or even
@@ -73,7 +72,6 @@ function handleNotifications(event) {
   for (let i = 0; i < value.byteLength; i++) {
     a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
   }
-  // document.querySelector("#log").value += a.join(' ')
   let d = battery_func(value)
   log(JSON.stringify(d));
   log('> ' + a.join(' '));
