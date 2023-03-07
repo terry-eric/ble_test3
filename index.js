@@ -65,7 +65,7 @@ async function onStartButtonClick() {
 
 function handleNotifications(event) {
   let value = event.target.value;
-  console.log(event.target);
+  log(event.target);
   let a = [];
   // Convert raw data bytes to hex values just for the sake of showing something.
   // In the "real" world, you'd use data.getUint8, data.getUint16 or even
