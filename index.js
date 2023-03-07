@@ -11,14 +11,14 @@ function log(text) {
 
 async function onStartButtonClick() {
   // add new
-  let serviceUuid = parseInt("00000000-0001-11e1-9ab4-0002a5d5c51b");
-  let batteryUuid = parseInt("00020000-0001-11e1-ac36-0002a5d5c51b");
-  let AcceleromterUuid = parseInt("00800000-0001-11e1-ac36-0002a5d5c51b");
+  let serviceUuid = "00000000-0001-11e1-9ab4-0002a5d5c51b";
+  let batteryUuid = "00020000-0001-11e1-ac36-0002a5d5c51b";
+  let AcceleromterUuid = "00800000-0001-11e1-ac36-0002a5d5c51b";
 
   try {
     log('Requesting Bluetooth Device...');
     const device = await navigator.bluetooth.requestDevice({
-      // add new
+      // add newDD
       optionalServices: [serviceUuid, batteryUuid, AcceleromterUuid],
       acceptAllDevices: true
     });
