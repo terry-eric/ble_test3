@@ -15,13 +15,13 @@ async function onStartButtonClick() {
   let batteryUuid = parseInt("0x00020000-0001-11e1-ac36-0002a5d5c51b");
   let AcceleromterUuid = parseInt("0x00800000-0001-11e1-ac36-0002a5d5c51b");
   if (serviceUuid.startsWith('0x')) {
-    parseInt(serviceUuid);
+    serviceUuid = parseInt(serviceUuid);
   }
   if (batteryUuid.startsWith('0x')) {
-    parseInt(batteryUuid);
+    batteryUuid = parseInt(batteryUuid);
   }
   if (AcceleromterUuid.startsWith('0x')) {
-    parseInt(AcceleromterUuid);
+    AcceleromterUuid = parseInt(AcceleromterUuid);
   }
 
   try {
