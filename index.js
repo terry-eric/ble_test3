@@ -77,7 +77,7 @@ function handleNotifications(event) {
   // log(JSON.stringify(d));
   
   log('< ' + value);  
-  log('> ' + a.join(','));
+  log('> ' + a);
 
 }
 
