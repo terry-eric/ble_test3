@@ -73,8 +73,8 @@ function handleNotifications(event) {
     a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
   }
   let d = battery_func(a)
-  log(JSON.stringify(a));
-  log(value.toString());
+  log(a.toString());
+  log(JSON.stringify(value));
   log(JSON.stringify(d));
   // log('> ' + a.join(','));
 
