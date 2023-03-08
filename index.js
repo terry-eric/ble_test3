@@ -73,10 +73,10 @@ function handleNotifications(event) {
     a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
   }
   // document.querySelector("#log").value += a.join(' ')
-  let d = battery_func(value)
-  // log(JSON.stringify(d));
+  let d = battery_func(a)
+  log(JSON.stringify(d));
   
-  log('< ' +JSON.stringify(a));  
+  // log('< ' +JSON.stringify(a));  
   log('> ' + a.join(','));
 
 }
