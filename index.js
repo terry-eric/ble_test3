@@ -72,11 +72,13 @@ function handleNotifications(event) {
   for (let i = 0; i < value.byteLength; i++) {
     a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
   }
-  // document.querySelector("#log").value += a.join(' ')
-  let d = battery_func(a)
+  let d = battery_func(event)
+  // 沒東西
+  log(d.toString())
+  log(value.toString())
+  log(a.toString())
+  // 有東西
   log(JSON.stringify(d));
-  
-  // log('< ' +JSON.stringify(a));  
   log('> ' + a.join(','));
 
 }
