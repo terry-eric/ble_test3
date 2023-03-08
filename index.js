@@ -76,7 +76,7 @@ function handleNotifications(event) {
   let d = battery_func(value)
   // log(JSON.stringify(d));
   
-  log('< ' +a);  
+  log('< ' +JSON.stringify(a));  
   log('> ' + a.join(','));
 
 }
