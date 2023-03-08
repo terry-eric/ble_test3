@@ -82,6 +82,9 @@ function handleNotifications(event) {
 function bytes2int16(high, low) {
   return (low << 8) | high
 }
+function bytes4int32(one , two, three, four) {
+    return (((four << 8) | three) << 16) | ((two << 8) | one) 
+}
 
 // 00020000-0001-11e1-ac36-0002a5d5c51b
 function battery_func(a) {
@@ -128,6 +131,73 @@ function Acceleromter_func(a) {
   }
 }
 
+// 0x00000400-0001-11e1-ac36-0002a5d5c51b
+function Acceleromter_event_func(a) {
+    let Timestamp = bytes2int16(a[0], a[1])
+    let event = a[2]
+    let steps = bytes2int16(a[3], a[4])
+    // if ((Timestamp + 100) > 65536){}
 
+    return {
+        Timestamp: Timestamp,
+        event : event,
+        steps : steps,
+    }
+}
 
+//  0x00040000-0001-11e1-ac36-0002a5d5c51b/0x00010000-0001-11e1-ac36-0002a5d5c51b  one or sec
+function Temperature_func(a) {
+    let Timestamp = bytes2int16(a[0], a[1])
+    let Temperature = bytes2int16(a[2], a[3])/10
+    // if ((Timestamp + 100) > 65536){}
 
+    return {
+        Timestamp: Timestamp,
+        Temperature : Temperature,
+    }
+}
+
+// 0x00100000-0001-11e1-ac36-0002a5d5c51b
+function Pressure_func(a) {
+    let Timestamp = bytes2int16(a[0], a[1])
+    let Pressure = bytes4int32(a[2], a[3], a[4], a[5])/100
+
+    // if ((Timestamp + 100) > 65536){}
+
+    return {
+        Timestamp: Timestamp,
+        Pressure: Pressure,
+    }
+}
+
+// 0x00200000-0001-11e1-ac36-0002a5d5c51b
+function Magnetometer_func(a) {
+    let Timestamp = bytes2int16(a[0], a[1])
+    let x = bytes2int16(a[2], a[3])
+    let y = bytes2int16(a[4], a[5])
+    let z = bytes2int16(a[6], a[7])
+    // if ((Timestamp + 100) > 65536){}
+
+    return {
+        Timestamp: Timestamp,
+        x : x,
+        y : y,
+        z : z,
+    }
+}
+
+// 0x00400000-0001-11e1-ac36-0002a5d5c51b
+function Gyroscope_func(a) {
+    let Timestamp = bytes2int16(a[0], a[1])
+    let x = bytes2int16(a[2], a[3])/10
+    let y = bytes2int16(a[4], a[5])/10
+    let z = bytes2int16(a[6], a[7])/10
+    // if ((Timestamp + 100) > 65536){}
+
+    return {
+        Timestamp: Timestamp,
+        x : x,
+        y : y,
+        z : z,
+    }
+}
