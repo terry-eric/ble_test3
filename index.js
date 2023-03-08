@@ -74,7 +74,7 @@ function handleNotifications(event) {
   }
   // log('> ' + a.join(' '));
   let d = battery_func(a)
-  // log(d);
+  log(JSON.stringify(value));
   log(JSON.stringify(d));
 
 }
@@ -83,7 +83,7 @@ function bytes2int16(high, low) {
   return (low << 8) | high
 }
 
-
+// 00020000-0001-11e1-ac36-0002a5d5c51b
 function battery_func(a) {
   let Timestamp = bytes2int16(a[0], a[1])
   let percentage = bytes2int16(a[2], a[3]) / 10
@@ -103,9 +103,31 @@ function battery_func(a) {
   }
 }
 
+// 0x00800000-0001-11e1-ac36-0002a5d5c51b 
+function Acceleromter_func(a) {
+  let Timestamp = bytes2int16(a[0], a[1])
+  let x = bytes2int16(a[2], a[3])
+  let y = bytes2int16(a[4], a[5])
+  let z = bytes2int16(a[6], a[7])
+  if (x >= 32768){
+      x = x - 65536
+  }
+  if (y >= 32768){
+      y = y - 65536
+  }
+  if (z >= 32768){
+      z = z - 65536
+  }
+  // if ((Timestamp + 100) > 65536){}
 
-// let hi = bytes2int16(0xa0,0x02)
-// console.log(hi);
-// 0x68,0x96,0xa0,0x02,0xd0,0x0c,0x00,0x80,0x02 //battery
+  return {
+      Timestamp: Timestamp,
+      x : x,
+      y : y,
+      z : z,
+  }
+}
+
+
 
 
