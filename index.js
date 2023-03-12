@@ -41,9 +41,9 @@ async function onStartButtonClick() {
     log('> Notifications started');
     // add new
     battery_Characteristic.addEventListener('characteristicvaluechanged',
-      handleNotifications);
-    // Acceleromter_Characteristic.addEventListener('characteristicvaluechanged',
-    //   handleNotifications);
+      battery_func);
+    Acceleromter_Characteristic.addEventListener('characteristicvaluechanged',
+    Acceleromter_func);
 
   } catch (error) {
     log('Argh! ' + error);
@@ -63,37 +63,32 @@ async function onStartButtonClick() {
 //   }
 // }
 
-function handleNotifications(event) {
-  let value = event.target.value;
-  let a = [];
-  // Convert raw data bytes to hex values just for the sake of showing something.
-  // In the "real" world, you'd use data.getUint8, data.getUint16 or even
-  // TextDecoder to process raw data bytes.
-  for (let i = 0; i < value.byteLength; i++) {
-    a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
-  }
-  let d = battery_func(a)
-  log(a.toString());
-  log(JSON.stringify(value));
-  log(JSON.stringify(d));
-  // log('> ' + a.join(','));
-
-}
-
 function bytes2int16(high, low) {
   return (low << 8) | high
 }
-function bytes4int32(one , two, three, four) {
-    return (((four << 8) | three) << 16) | ((two << 8) | one) 
+function bytes4int32(one, two, three, four) {
+  return (((four << 8) | three) << 16) | ((two << 8) | one)
 }
 
 // 00020000-0001-11e1-ac36-0002a5d5c51b
-function battery_func(a) {
-  let Timestamp = bytes2int16(a[0], a[1])
-  let percentage = bytes2int16(a[2], a[3]) / 10
-  let voltage = bytes2int16(a[4], a[5]) / 1000
-  let current = bytes2int16(a[6], a[7]) / 10
-  let status = parseInt(a[8])
+function battery_func(event) {
+
+  let value = event.target.value;
+  let a = [];
+  for (let i = 0; i < value.byteLength; i++) {
+    a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
+  }
+  let bytes = a.toString();
+  log(bytes);
+  // log(JSON.stringify(value));
+  // log(JSON.stringify(d));
+
+
+  let Timestamp = bytes2int16(bytes[0], bytes[1])
+  let percentage = bytes2int16(bytes[2], bytes[3]) / 10
+  let voltage = bytes2int16(bytes[4], bytes[5]) / 1000
+  let current = bytes2int16(bytes[6], bytes[7]) / 10
+  let status = parseInt(bytes[8])
 
   if (Timestamp)
     if (status == 2) { percentage = 0; current = 0 }
@@ -108,97 +103,159 @@ function battery_func(a) {
 }
 
 // 0x00800000-0001-11e1-ac36-0002a5d5c51b 
-function Acceleromter_func(a) {
-  let Timestamp = bytes2int16(a[0], a[1])
-  let x = bytes2int16(a[2], a[3])
-  let y = bytes2int16(a[4], a[5])
-  let z = bytes2int16(a[6], a[7])
-  if (x >= 32768){
-      x = x - 65536
+function Acceleromter_func(event) {
+
+  let value = event.target.value;
+  let a = [];
+  for (let i = 0; i < value.byteLength; i++) {
+    a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
   }
-  if (y >= 32768){
-      y = y - 65536
+  let bytes = a.toString();
+  log(bytes);
+  // log(JSON.stringify(value));
+  // log(JSON.stringify(d));
+
+
+  let Timestamp = bytes2int16(bytes[0], bytes[1])
+  let x = bytes2int16(bytes[2], bytes[3])
+  let y = bytes2int16(bytes[4], bytes[5])
+  let z = bytes2int16(bytes[6], bytes[7])
+  if (x >= 32768) {
+    x = x - 65536
   }
-  if (z >= 32768){
-      z = z - 65536
+  if (y >= 32768) {
+    y = y - 65536
+  }
+  if (z >= 32768) {
+    z = z - 65536
   }
   // if ((Timestamp + 100) > 65536){}
 
   return {
-      Timestamp: Timestamp,
-      x : x,
-      y : y,
-      z : z,
+    Timestamp: Timestamp,
+    x: x,
+    y: y,
+    z: z,
   }
 }
 
 // 0x00000400-0001-11e1-ac36-0002a5d5c51b
-function Acceleromter_event_func(a) {
-    let Timestamp = bytes2int16(a[0], a[1])
-    let event = a[2]
-    let steps = bytes2int16(a[3], a[4])
-    // if ((Timestamp + 100) > 65536){}
+function Acceleromter_event_func(event) {
 
-    return {
-        Timestamp: Timestamp,
-        event : event,
-        steps : steps,
-    }
+  let value = event.target.value;
+  let a = [];
+  for (let i = 0; i < value.byteLength; i++) {
+    a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
+  }
+  let bytes = a.toString();
+  log(bytes);
+  // log(JSON.stringify(value));
+  // log(JSON.stringify(d));
+  let Timestamp = bytes2int16(bytes[0], bytes[1])
+  let event = bytes[2]
+  let steps = bytes2int16(bytes[3], bytes[4])
+  // if ((Timestamp + 100) > 65536){}
+
+  return {
+    Timestamp: Timestamp,
+    event: event,
+    steps: steps,
+  }
 }
 
 //  0x00040000-0001-11e1-ac36-0002a5d5c51b/0x00010000-0001-11e1-ac36-0002a5d5c51b  one or sec
-function Temperature_func(a) {
-    let Timestamp = bytes2int16(a[0], a[1])
-    let Temperature = bytes2int16(a[2], a[3])/10
-    // if ((Timestamp + 100) > 65536){}
+function Temperature_func(event) {
 
-    return {
-        Timestamp: Timestamp,
-        Temperature : Temperature,
-    }
+  let value = event.target.value;
+  let a = [];
+  for (let i = 0; i < value.byteLength; i++) {
+    a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
+  }
+  let bytes = a.toString();
+  log(bytes);
+  // log(JSON.stringify(value));
+  // log(JSON.stringify(d));
+  let Timestamp = bytes2int16(bytes[0], bytes[1])
+  let Temperature = bytes2int16(bytes[2], bytes[3]) / 10
+  // if ((Timestamp + 100) > 65536){}
+
+  return {
+    Timestamp: Timestamp,
+    Temperature: Temperature,
+  }
 }
 
 // 0x00100000-0001-11e1-ac36-0002a5d5c51b
-function Pressure_func(a) {
-    let Timestamp = bytes2int16(a[0], a[1])
-    let Pressure = bytes4int32(a[2], a[3], a[4], a[5])/100
+function Pressure_func(event) {
 
-    // if ((Timestamp + 100) > 65536){}
+  let value = event.target.value;
+  let a = [];
+  for (let i = 0; i < value.byteLength; i++) {
+    a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
+  }
+  let bytes = a.toString();
+  log(bytes);
+  // log(JSON.stringify(value));
+  // log(JSON.stringify(d));
+  let Timestamp = bytes2int16(bytes[0], bytes[1])
+  let Pressure = bytes4int32(bytes[2], bytes[3], bytes[4], bytes[5]) / 100
 
-    return {
-        Timestamp: Timestamp,
-        Pressure: Pressure,
-    }
+  // if ((Timestamp + 100) > 65536){}
+
+  return {
+    Timestamp: Timestamp,
+    Pressure: Pressure,
+  }
 }
 
 // 0x00200000-0001-11e1-ac36-0002a5d5c51b
-function Magnetometer_func(a) {
-    let Timestamp = bytes2int16(a[0], a[1])
-    let x = bytes2int16(a[2], a[3])
-    let y = bytes2int16(a[4], a[5])
-    let z = bytes2int16(a[6], a[7])
-    // if ((Timestamp + 100) > 65536){}
+function Magnetometer_func(event) {
 
-    return {
-        Timestamp: Timestamp,
-        x : x,
-        y : y,
-        z : z,
-    }
+  let value = event.target.value;
+  let a = [];
+  for (let i = 0; i < value.byteLength; i++) {
+    a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
+  }
+  let bytes = a.toString();
+  log(bytes);
+  // log(JSON.stringify(value));
+  // log(JSON.stringify(d));
+  let Timestamp = bytes2int16(bytes[0], bytes[1])
+  let x = bytes2int16(bytes[2],bytesa[3])
+  let y = bytes2int16(bytes[4], bytes[5])
+  let z = bytes2int16(bytes[6], bytes[7])
+  // if ((Timestamp + 100) > 65536){}
+
+  return {
+    Timestamp: Timestamp,
+    x: x,
+    y: y,
+    z: z,
+  }
 }
 
 // 0x00400000-0001-11e1-ac36-0002a5d5c51b
-function Gyroscope_func(a) {
-    let Timestamp = bytes2int16(a[0], a[1])
-    let x = bytes2int16(a[2], a[3])/10
-    let y = bytes2int16(a[4], a[5])/10
-    let z = bytes2int16(a[6], a[7])/10
-    // if ((Timestamp + 100) > 65536){}
+function Gyroscope_func(event) {
 
-    return {
-        Timestamp: Timestamp,
-        x : x,
-        y : y,
-        z : z,
-    }
+  let value = event.target.value;
+  let a = [];
+  for (let i = 0; i < value.byteLength; i++) {
+    a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
+  }
+  let bytes = a.toString();
+  log(bytes);
+  // log(JSON.stringify(value));
+  // log(JSON.stringify(d));
+  let Timestamp = bytes2int16(bytes[0], bytes[1])
+  let x = bytes2int16(abytes[2], bytes[3]) / 10
+  let y = bytes2int16(bytes[4], bytes[5]) / 10
+  let z = bytes2int16(bytes[6], bytes[7]) / 10
+  // if ((Timestamp + 100) > 65536){}
+
+  return {
+    Timestamp: Timestamp,
+    x: x,
+    y: y,
+    z: z,
+  }
 }
