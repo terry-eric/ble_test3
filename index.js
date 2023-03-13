@@ -79,7 +79,7 @@ function battery_func(event) {
     a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
   }
   let bytes = a.toString();
-  log(bytes);
+  // log(bytes);
   // log(JSON.stringify(value));
   // log(JSON.stringify(d));
 
@@ -93,13 +93,15 @@ function battery_func(event) {
   if (Timestamp)
     if (status == 2) { percentage = 0; current = 0 }
 
-  return {
-    Timestamp: Timestamp,
-    percentage: percentage,
-    voltage: voltage,
-    current: current,
-    status: status
-  }
+  let output = [Timestamp,percentage,voltage,current,status]
+  log(stringify(output))
+  // return {
+  //   Timestamp: Timestamp,
+  //   percentage: percentage,
+  //   voltage: voltage,
+  //   current: current,
+  //   status: status
+  // }
 }
 
 // 0x00800000-0001-11e1-ac36-0002a5d5c51b 
@@ -111,7 +113,7 @@ function Acceleromter_func(event) {
     a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
   }
   let bytes = a.toString();
-  log(bytes);
+  // log(bytes);
   // log(JSON.stringify(value));
   // log(JSON.stringify(d));
 
@@ -131,12 +133,14 @@ function Acceleromter_func(event) {
   }
   // if ((Timestamp + 100) > 65536){}
 
-  return {
-    Timestamp: Timestamp,
-    x: x,
-    y: y,
-    z: z,
-  }
+  let output = [x,y,z]
+  log(stringify(output))
+  // return {
+  //   Timestamp: Timestamp,
+  //   x: x,
+  //   y: y,
+  //   z: z,
+  // }
 }
 
 // 0x00000400-0001-11e1-ac36-0002a5d5c51b
@@ -148,19 +152,20 @@ function Acceleromter_event_func(event) {
     a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
   }
   let bytes = a.toString();
-  log(bytes);
+  // log(bytes);
   // log(JSON.stringify(value));
   // log(JSON.stringify(d));
   let Timestamp = bytes2int16(bytes[0], bytes[1])
   let acc_event = bytes[2]
   let steps = bytes2int16(bytes[3], bytes[4])
   // if ((Timestamp + 100) > 65536){}
-
-  return {
-    Timestamp: Timestamp,
-    acc_event: acc_event,
-    steps: steps,
-  }
+  let output = [Timestamp,acc_event,steps]
+  log(stringify(output))
+  // return {
+  //   Timestamp: Timestamp,
+  //   acc_event: acc_event,
+  //   steps: steps
+  // }
 }
 
 //  0x00040000-0001-11e1-ac36-0002a5d5c51b/0x00010000-0001-11e1-ac36-0002a5d5c51b  one or sec
