@@ -152,13 +152,13 @@ function Acceleromter_event_func(event) {
   // log(JSON.stringify(value));
   // log(JSON.stringify(d));
   let Timestamp = bytes2int16(bytes[0], bytes[1])
-  let event = bytes[2]
+  let acc_event = bytes[2]
   let steps = bytes2int16(bytes[3], bytes[4])
   // if ((Timestamp + 100) > 65536){}
 
   return {
     Timestamp: Timestamp,
-    event: event,
+    acc_event: acc_event,
     steps: steps,
   }
 }
