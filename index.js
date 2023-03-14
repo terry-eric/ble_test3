@@ -36,7 +36,7 @@ async function onStartButtonClick() {
 
     // add new
     await battery_Characteristic.startNotifications();
-    // await Acceleromter_Characteristic.startNotifications();
+    await Acceleromter_Characteristic.startNotifications();
 
     log('> Notifications started');
     // add new
