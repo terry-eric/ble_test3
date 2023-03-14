@@ -93,7 +93,7 @@ function battery_func(event) {
   if (Timestamp)
     if (status == 2) { percentage = 0; current = 0 }
 
-  let output = [Timestamp,percentage,voltage,current,status]
+  let output = ["battery",Timestamp,percentage,voltage,current,status]
   log(JSON.stringify(output))
   // return {
   //   Timestamp: Timestamp,
@@ -133,7 +133,7 @@ function Acceleromter_func(event) {
   }
   // if ((Timestamp + 100) > 65536){}
 
-  let output = [x,y,z]
+  let output = ["Acceleromter",x,y,z]
   log(JSON.stringify(output))
   // return {
   //   Timestamp: Timestamp,
@@ -159,7 +159,7 @@ function Acceleromter_event_func(event) {
   let acc_event = bytes[2]
   let steps = bytes2int16(bytes[3], bytes[4])
   // if ((Timestamp + 100) > 65536){}
-  let output = [Timestamp,acc_event,steps]
+  let output = ["Acceleromter_event",Timestamp,acc_event,steps]
   log(JSON.stringify(output))
   // return {
   //   Timestamp: Timestamp,
