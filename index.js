@@ -1,5 +1,6 @@
 var battery_Characteristic, Acceleromter_Characteristic;
-
+const sensordata = [];
+const df = new DataFrame(sensordata);
 let startBtn = document.querySelector('#start');
 let stopBtn = document.querySelector('#stop');
 startBtn.addEventListener("click", onStartButtonClick)
@@ -14,13 +15,13 @@ async function onStartButtonClick() {
   let serviceUuid = "00000000-0001-11e1-9ab4-0002a5d5c51b";
   let batteryUuid = "00020000-0001-11e1-ac36-0002a5d5c51b";
   let AcceleromterUuid = "00800000-0001-11e1-ac36-0002a5d5c51b";
-  let Acceleromter_eventUuid = "00000400-0001-11e1-ac36-0002a5d5c51b";
+  // let Acceleromter_eventUuid = "00000400-0001-11e1-ac36-0002a5d5c51b";
   
   try {
     log('Requesting Bluetooth Device...');
     const device = await navigator.bluetooth.requestDevice({
       // add newDD
-      optionalServices: [serviceUuid, batteryUuid, AcceleromterUuid, Acceleromter_eventUuid],
+      optionalServices: [serviceUuid, batteryUuid, AcceleromterUuid],
       acceptAllDevices: true
     });
 
@@ -34,12 +35,12 @@ async function onStartButtonClick() {
     // add new
     battery_Characteristic = await service.getCharacteristic(batteryUuid);
     Acceleromter_Characteristic = await service.getCharacteristic(AcceleromterUuid);
-    Acceleromter_event_Characteristic = await service.getCharacteristic(Acceleromter_eventUuid);
+    // Acceleromter_event_Characteristic = await service.getCharacteristic(Acceleromter_eventUuid);
 
     // add new
     await battery_Characteristic.startNotifications();
     await Acceleromter_Characteristic.startNotifications();
-    await Acceleromter_event_Characteristic.startNotifications();
+    // await Acceleromter_event_Characteristic.startNotifications();
 
     log('> Notifications started');
     // add new
@@ -47,8 +48,10 @@ async function onStartButtonClick() {
       battery_func);
     Acceleromter_Characteristic.addEventListener('characteristicvaluechanged',
     Acceleromter_func);
-    Acceleromter_event_Characteristic.addEventListener('characteristicvaluechanged',
-    Acceleromter_event_func);
+    // Acceleromter_event_Characteristic.addEventListener('characteristicvaluechanged',
+    // Acceleromter_event_func);
+
+
 
   } catch (error) {
     log('Argh! ' + error);
@@ -99,6 +102,7 @@ function battery_func(event) {
     if (status == 2) { percentage = 0; current = 0 }
 
   let output = ["battery",Timestamp,percentage,voltage,current,status]
+  df = df.addRow(output);
   log(JSON.stringify(output))
   // return {
   //   Timestamp: Timestamp,
@@ -140,6 +144,7 @@ function Acceleromter_func(event) {
 
   let output = ["Acceleromter",Timestamp,x,y,z]
   log(JSON.stringify(output))
+  df = df.addRow(output);
   // return {
   //   Timestamp: Timestamp,
   //   x: x,
