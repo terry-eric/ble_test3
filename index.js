@@ -133,7 +133,7 @@ function Acceleromter_func(event) {
   }
   // if ((Timestamp + 100) > 65536){}
 
-  let output = ["Acceleromter",x,y,z]
+  let output = ["Acceleromter",Timestamp,x,y,z]
   log(JSON.stringify(output))
   // return {
   //   Timestamp: Timestamp,
