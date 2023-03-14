@@ -14,7 +14,8 @@ async function onStartButtonClick() {
   let serviceUuid = "00000000-0001-11e1-9ab4-0002a5d5c51b";
   let batteryUuid = "00020000-0001-11e1-ac36-0002a5d5c51b";
   let AcceleromterUuid = "00800000-0001-11e1-ac36-0002a5d5c51b";
-
+  let Acceleromter_eventUuid = "00000400-0001-11e1-ac36-0002a5d5c51b";
+  
   try {
     log('Requesting Bluetooth Device...');
     const device = await navigator.bluetooth.requestDevice({
@@ -33,10 +34,12 @@ async function onStartButtonClick() {
     // add new
     battery_Characteristic = await service.getCharacteristic(batteryUuid);
     Acceleromter_Characteristic = await service.getCharacteristic(AcceleromterUuid);
+    Acceleromter_event_Characteristic = await service.getCharacteristic(Acceleromter_eventUuid);
 
     // add new
     await battery_Characteristic.startNotifications();
     await Acceleromter_Characteristic.startNotifications();
+    await Acceleromter_event_Characteristic.startNotifications();
 
     log('> Notifications started');
     // add new
@@ -44,6 +47,8 @@ async function onStartButtonClick() {
       battery_func);
     Acceleromter_Characteristic.addEventListener('characteristicvaluechanged',
     Acceleromter_func);
+    Acceleromter_event_Characteristic.addEventListener('characteristicvaluechanged',
+    Acceleromter_event_func);
 
   } catch (error) {
     log('Argh! ' + error);
