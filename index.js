@@ -20,7 +20,7 @@ async function onStartButtonClick() {
     log('Requesting Bluetooth Device...');
     const device = await navigator.bluetooth.requestDevice({
       // add newDD
-      optionalServices: [serviceUuid, batteryUuid, AcceleromterUuid],
+      optionalServices: [serviceUuid, batteryUuid, AcceleromterUuid, Acceleromter_eventUuid],
       acceptAllDevices: true
     });
 
