@@ -64,14 +64,23 @@ async function onStopButtonClick() {
     await battery_Characteristic.stopNotifications();
     await Acceleromter_Characteristic.stopNotifications();
     battery_Characteristic.removeEventListener('characteristicvaluechanged',
-    battery_func);
+      battery_func);
     Acceleromter_Characteristic.removeEventListener('characteristicvaluechanged',
-    Acceleromter_func);
+      Acceleromter_func);
     log('> Notifications stopped');
 
     const csv = sensordata.map(row => row.join(',')).join('\n');
     document.querySelector("#log").innerHTML = '';
     log(csv);
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'output.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 
   } catch (error) {
     log('Argh! ' + error);
