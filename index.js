@@ -1,7 +1,6 @@
 var battery_Characteristic, Acceleromter_Characteristic;
 const sensordata = [];
-import DataFrame from './dataframe-js.js'
-const df = new DataFrame(sensordata); 
+
 let startBtn = document.querySelector('#start');
 let stopBtn = document.querySelector('#stop');
 startBtn.addEventListener("click", onStartButtonClick)
@@ -69,9 +68,10 @@ async function onStopButtonClick() {
     Acceleromter_Characteristic.removeEventListener('characteristicvaluechanged',
     Acceleromter_func);
     log('> Notifications stopped');
-    const csvString = Papa.unparse(df);
+
+    const csv = sensordata.map(row => row.join(',')).join('\n');
     document.querySelector("#log").innerHTML = '';
-    log(csvString);
+    log(csv);
 
   } catch (error) {
     log('Argh! ' + error);
@@ -110,7 +110,7 @@ function battery_func(event) {
     if (status == 2) { percentage = 0; current = 0 }
 
   let output = ["battery", Timestamp, percentage, voltage, current, status]
-  df = df.addRow(output);
+  sensordata.push(output);
   log(JSON.stringify(output))
   // return {
   //   Timestamp: Timestamp,
@@ -152,7 +152,7 @@ function Acceleromter_func(event) {
 
   let output = ["Acceleromter", Timestamp, x, y, z]
   log(JSON.stringify(output))
-  df = df.addRow(output);
+  sensordata.push(output);
   // return {
   //   Timestamp: Timestamp,
   //   x: x,
