@@ -1,6 +1,6 @@
 var battery_Characteristic, Acceleromter_Characteristic;
 const sensordata = [];
-import { DataFrame } from 'dataframe-js';
+const DataFrame = require('dataframe-js').DataFrame;
 const df = new DataFrame(sensordata); 
 let startBtn = document.querySelector('#start');
 let stopBtn = document.querySelector('#stop');
