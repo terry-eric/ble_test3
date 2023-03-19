@@ -124,10 +124,10 @@ function battery_func(event) {
   // log(JSON.stringify(d));
 
 
-  let Timestamp = bytes2int16(bytes[0], bytes[1])
-  let percentage = bytes2int16(bytes[2], bytes[3]) / 10
-  let voltage = bytes2int16(bytes[4], bytes[5]) / 1000
-  let current = bytes2int16(bytes[6], bytes[7]) / 10
+  let Timestamp = bytes2int16([bytes[0], bytes[1]])
+  let percentage = bytes2int16([bytes[2], bytes[3]]) / 10
+  let voltage = bytes2int16([bytes[4], bytes[5]]) / 1000
+  let current = bytes2int16([bytes[6], bytes[7]]) / 10
   let status = parseInt(bytes[8])
 
   if (Timestamp)
@@ -164,10 +164,10 @@ function Acceleromter_func(event) {
   // log(JSON.stringify(d));
 
 
-  let Timestamp = bytes2int16(bytes[0], bytes[1])
-  let x = bytes2int16(bytes[2], bytes[3])
-  let y = bytes2int16(bytes[4], bytes[5])
-  let z = bytes2int16(bytes[6], bytes[7])
+  let Timestamp = bytes2int16([bytes[0], bytes[1]])
+  let x = bytes2int16([bytes[2], bytes[3]])
+  let y = bytes2int16([bytes[4], bytes[5]])
+  let z = bytes2int16([bytes[6], bytes[7]])
   // if (x >= 32768) {
   //   x = x - 65536
   // }
@@ -279,10 +279,10 @@ function Magnetometer_func(event) {
   // log(bytes);
   // log(JSON.stringify(value));
   // log(JSON.stringify(d));
-  let Timestamp = bytes2int16(bytes[0], bytes[1])
-  let x = bytes2int16(bytes[2], bytes[3])
-  let y = bytes2int16(bytes[4], bytes[5])
-  let z = bytes2int16(bytes[6], bytes[7])
+  let Timestamp = bytes2int16([bytes[0], bytes[1]])
+  let x = bytes2int16([bytes[2], bytes[3]])
+  let y = bytes2int16([bytes[4], bytes[5]])
+  let z = bytes2int16([bytes[6], bytes[7]])
   // if ((Timestamp + 100) > 65536){}
 
   document.getElementById("gyroX").innerHTML = x;
