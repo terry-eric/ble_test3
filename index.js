@@ -13,8 +13,8 @@ function log(text) {
 async function onStartButtonClick() {
   // add new
   let serviceUuid = "00000000-0001-11e1-9ab4-0002a5d5c51b";
-  // let batteryUuid = "00020000-0001-11e1-ac36-0002a5d5c51b";
-  // let AcceleromterUuid = "00800000-0001-11e1-ac36-0002a5d5c51b";
+  let batteryUuid = "00020000-0001-11e1-ac36-0002a5d5c51b";
+  let AcceleromterUuid = "00800000-0001-11e1-ac36-0002a5d5c51b";
   // let Acceleromter_eventUuid = "00000400-0001-11e1-ac36-0002a5d5c51b";
   let magnetometerUuid = "00200000-0001-11e1-ac36-0002a5d5c51b";
 
@@ -22,8 +22,8 @@ async function onStartButtonClick() {
     log('Requesting Bluetooth Device...');
     const device = await navigator.bluetooth.requestDevice({
       // add newDD
-      // optionalServices: [serviceUuid, batteryUuid, AcceleromterUuid],
-      optionalServices: [serviceUuid, magnetometerUuid],
+      optionalServices: [serviceUuid, batteryUuid, AcceleromterUuid, magnetometerUuid],
+      // optionalServices: [serviceUuid, magnetometerUuid],
       acceptAllDevices: true
     });
 
@@ -35,24 +35,24 @@ async function onStartButtonClick() {
 
     log('Getting Characteristic...');
     // add new
-    // battery_Characteristic = await service.getCharacteristic(batteryUuid);
-    // Acceleromter_Characteristic = await service.getCharacteristic(AcceleromterUuid);
+    battery_Characteristic = await service.getCharacteristic(batteryUuid);
+    Acceleromter_Characteristic = await service.getCharacteristic(AcceleromterUuid);
     magnetometer_Characteristic = await service.getCharacteristic(magnetometerUuid);
     // Acceleromter_event_Characteristic = await service.getCharacteristic(Acceleromter_eventUuid);
 
     // add new
-    // await battery_Characteristic.startNotifications();
-    // await Acceleromter_Characteristic.startNotifications();
+    await battery_Characteristic.startNotifications();
+    await Acceleromter_Characteristic.startNotifications();
     await magnetometer_Characteristic.startNotifications();
     // await Acceleromter_event_Characteristic.startNotifications();
-    1
+
     log('> Notifications started');
     // add new
-    // battery_Characteristic.addEventListener('characteristicvaluechanged',
-    //   battery_func);
-    // Acceleromter_Characteristic.addEventListener('characteristicvaluechanged',
-    //   Acceleromter_func);
-      magnetometer_Characteristic.addEventListener('characteristicvaluechanged',
+    battery_Characteristic.addEventListener('characteristicvaluechanged',
+      battery_func);
+    Acceleromter_Characteristic.addEventListener('characteristicvaluechanged',
+      Acceleromter_func);
+    magnetometer_Characteristic.addEventListener('characteristicvaluechanged',
       Magnetometer_func);
     // Acceleromter_event_Characteristic.addEventListener('characteristicvaluechanged',
     // Acceleromter_event_func);
