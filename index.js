@@ -97,10 +97,15 @@ async function onStopButtonClick() {
   }
 }
 
-
-function bytes2int16(high, low) {
-  return (low << 8) | high
+function bytes2int16(bytes) {
+  var view = new DataView(new ArrayBuffer(2));
+  view.setUint8(0, bytes[0]);
+  view.setUint8(1, bytes[1]);
+  return view.getInt16(0, true); // true indicates little-endian byte order
 }
+// function bytes2int16(high, low) {
+//   return (low << 8) | high
+// }
 function bytes4int32(one, two, three, four) {
   return (((four << 8) | three) << 16) | ((two << 8) | one)
 }
@@ -163,15 +168,15 @@ function Acceleromter_func(event) {
   let x = bytes2int16(bytes[2], bytes[3])
   let y = bytes2int16(bytes[4], bytes[5])
   let z = bytes2int16(bytes[6], bytes[7])
-  if (x >= 32768) {
-    x = x - 65536
-  }
-  if (y >= 32768) {
-    y = y - 65536
-  }
-  if (z >= 32768) {
-    z = z - 65536
-  }
+  // if (x >= 32768) {
+  //   x = x - 65536
+  // }
+  // if (y >= 32768) {
+  //   y = y - 65536
+  // }
+  // if (z >= 32768) {
+  //   z = z - 65536
+  // }
   // if ((Timestamp + 100) > 65536){}
 
   document.getElementById("accX").innerHTML = x;
