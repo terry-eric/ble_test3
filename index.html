@@ -8,16 +8,59 @@
     <!-- <meta http-equiv="Permissions-Policy" content="interest-cohort=()"> -->
 
     <title>Document</title>
-    
+    <style>
+table, th, td {
+  border: 1px solid;
+  /* width: 100%; */
+}
+    </style>
 </head>
 
 <body>
     <button id="start">start</button>
     <button id="stop">stop</button>
+    <br><br>
+    
+    <table>
+        <tr>
+            <td>
+                <div>
+                    加速度
+                </div>
+            </td>
+            <td>
+                <div>
+                    陀螺儀
+                </div>
+            </td>
+            <td>
+                <div>
+                    電池
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>accX: <span id="accX">-1</span></div>
+                <div>accY: <span id="accY">-1</span></div>
+                <div>accZ: <span id="accZ">-1</span></div>
+            </td>
+            <td>
+                <div>gyroX: <span id="gyroX">-1</span></div>
+                <div>gyroY: <span id="gyroY">-1</span></div>
+                <div>gyroZ: <span id="gyroZ">-1</span></div>
+            </td>
+            <td>
+                <div>voltage: <span id="batVoltage">-1</span></div>
+                <div>current: <span id="batCurrent">-1</span></div>
+                <div>status: <span id="batStatus">-1</span></div>
+            </td>
+                
+        </tr>
+    </table>
+    <br>
     <textarea name="" id="log" cols="50" rows="10"></textarea>
-    <!-- <script type="module" src="index.js"></script> -->
-    <script type="module" src="Magnetometer.js"></script>
-
+    <script type="module" src="index.js"></script>
 </body>
 
 </html>

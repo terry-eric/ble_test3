@@ -3,8 +3,21 @@ const sensordata = [];
 
 let startBtn = document.querySelector('#start');
 let stopBtn = document.querySelector('#stop');
-startBtn.addEventListener("click", onStartButtonClick)
-stopBtn.addEventListener("click", onStopButtonClick)
+
+startBtn.addEventListener("click", onStartButtonClick);
+stopBtn.addEventListener("click", onStopButtonClick);
+
+accX = document.getElementById('accX').id;
+accY = document.getElementById('accY').id;
+accZ = document.getElementById('accZ').id;
+
+gyroX = document.getElementById('gyroX').id;
+gyroY = document.getElementById('gyroY').id;
+gyroZ = document.getElementById('gyroZ').id;
+
+batVoltage = document.getElementById('batVoltage').id;
+batCurrent = document.getElementById('batCurrent').id;
+batStatus = document.getElementById('batStatus').id;
 
 function log(text) {
   document.querySelector("#log").value += text + "\n"
@@ -124,6 +137,10 @@ function battery_func(event) {
   if (Timestamp)
     if (status == 2) { percentage = 0; current = 0 }
 
+  batVoltage = voltage;
+  batCurrent = current;
+  batStatus = status;
+
   let output = ["battery", Timestamp, percentage, voltage, current, status]
   sensordata.push(output);
   log(JSON.stringify(output))
@@ -164,6 +181,10 @@ function Acceleromter_func(event) {
     z = z - 65536
   }
   // if ((Timestamp + 100) > 65536){}
+
+  accX = x;
+  accY = y;
+  accZ = z;
 
   let output = ["Acceleromter", Timestamp, x, y, z]
   log(JSON.stringify(output))
@@ -259,10 +280,14 @@ function Magnetometer_func(event) {
   // log(JSON.stringify(value));
   // log(JSON.stringify(d));
   let Timestamp = bytes2int16(bytes[0], bytes[1])
-  let x = bytes2int16(bytes[2], bytesa[3])
+  let x = bytes2int16(bytes[2], bytes[3])
   let y = bytes2int16(bytes[4], bytes[5])
   let z = bytes2int16(bytes[6], bytes[7])
   // if ((Timestamp + 100) > 65536){}
+
+  gyroX = x;
+  gyroY = y;
+  gyroZ = z;
 
   let output = ["Magnetometer", Timestamp, x, y, z]
   log(JSON.stringify(output))
