@@ -152,8 +152,9 @@ function Acceleromter_func(event) {
   for (let i = 0; i < value.byteLength; i++) {
     a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
   }
-  let bytes = a.toString();
-  log(bytes);
+  let bytes = a;
+  // let bytes = a.toString();
+  // log(bytes);
   // log(JSON.stringify(value));
   // log(JSON.stringify(d));
 
@@ -195,7 +196,8 @@ function Acceleromter_event_func(event) {
   for (let i = 0; i < value.byteLength; i++) {
     a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
   }
-  let bytes = a.toString();
+  let bytes = a;
+  // let bytes = a.toString();
   // log(bytes);
   // log(JSON.stringify(value));
   // log(JSON.stringify(d));
@@ -220,8 +222,9 @@ function Temperature_func(event) {
   for (let i = 0; i < value.byteLength; i++) {
     a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
   }
-  let bytes = a.toString();
-  log(bytes);
+  let bytes = a;
+  // let bytes = a.toString();
+  // log(bytes);
   // log(JSON.stringify(value));
   // log(JSON.stringify(d));
   let Timestamp = bytes2int16(bytes[0], bytes[1])
@@ -242,8 +245,9 @@ function Pressure_func(event) {
   for (let i = 0; i < value.byteLength; i++) {
     a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
   }
-  let bytes = a.toString();
-  log(bytes);
+  let bytes = a;
+  // let bytes = a.toString();
+  // log(bytes);
   // log(JSON.stringify(value));
   // log(JSON.stringify(d));
   let Timestamp = bytes2int16(bytes[0], bytes[1])
@@ -265,7 +269,8 @@ function Magnetometer_func(event) {
   for (let i = 0; i < value.byteLength; i++) {
     a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
   }
-  let bytes = a.toString();
+  let bytes = a;
+  // let bytes = a.toString();
   // log(bytes);
   // log(JSON.stringify(value));
   // log(JSON.stringify(d));
@@ -299,8 +304,9 @@ function Gyroscope_func(event) {
   for (let i = 0; i < value.byteLength; i++) {
     a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
   }
-  let bytes = a.toString();
-  log(bytes);
+  let bytes = a;
+  // let bytes = a.toString();
+  // log(bytes);
   // log(JSON.stringify(value));
   // log(JSON.stringify(d));
   let Timestamp = bytes2int16(bytes[0], bytes[1])
