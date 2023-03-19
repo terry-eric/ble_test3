@@ -53,7 +53,7 @@ async function onStartButtonClick() {
     // Acceleromter_Characteristic.addEventListener('characteristicvaluechanged',
     //   Acceleromter_func);
       magnetometer_Characteristic.addEventListener('characteristicvaluechanged',
-      magnetometer_func);
+      Magnetometer_func);
     // Acceleromter_event_Characteristic.addEventListener('characteristicvaluechanged',
     // Acceleromter_event_func);
 
