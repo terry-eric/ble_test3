@@ -70,10 +70,13 @@ async function onStopButtonClick() {
   try {
     await battery_Characteristic.stopNotifications();
     await Acceleromter_Characteristic.stopNotifications();
+    await magnetometer_Characteristic.stopNotifications();
     battery_Characteristic.removeEventListener('characteristicvaluechanged',
       battery_func);
     Acceleromter_Characteristic.removeEventListener('characteristicvaluechanged',
       Acceleromter_func);
+    magnetometer_Characteristic.removeEventListener('characteristicvaluechanged',
+      Magnetometer_func);
     log('> Notifications stopped');
 
     const csv = sensordata.map(row => row.join(',')).join('\n');
@@ -150,7 +153,7 @@ function Acceleromter_func(event) {
     a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
   }
   let bytes = a.toString();
-  // log(bytes);
+  log(bytes);
   // log(JSON.stringify(value));
   // log(JSON.stringify(d));
 

@@ -50,7 +50,7 @@ async function onStartButtonClick() {
 async function onStopButtonClick() {
 
   try {
-    await magnetometer_CharacteristicCharacteristic.stopNotifications();
+    await magnetometer_Characteristic.stopNotifications();
     magnetometer_Characteristic.removeEventListener('characteristicvaluechanged',
     Magnetometer_func);
     log('> Notifications stopped');
