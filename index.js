@@ -58,8 +58,6 @@ async function onStartButtonClick() {
     // Acceleromter_event_Characteristic.addEventListener('characteristicvaluechanged',
     // Acceleromter_event_func);
 
-
-
   } catch (error) {
     log('Argh! ' + error);
   }
