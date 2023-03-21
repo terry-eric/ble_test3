@@ -79,6 +79,7 @@ function bytes2int16(bytes) {
 }
 // 0x00400000-0001-11e1-ac36-0002a5d5c51b
 function gyroscope_func(event) {
+  log("HI");
   log(JSON.stringify(event.target));
   log(event.target);
   log("HI");
