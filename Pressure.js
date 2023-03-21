@@ -77,7 +77,7 @@ function bytes2int16(bytes) {
   view.setUint8(1, bytes[1]);
   return view.getInt16(0, true); // true indicates little-endian byte order
 }
-// 0x00400000-0001-11e1-ac36-0002a5d5c51b
+// 0x00100000-0001-11e1-ac36-0002a5d5c51b
 function pressure_func(event) {
 
   let value = event.target.value;
@@ -87,24 +87,18 @@ function pressure_func(event) {
   }
   let bytes = a;
   // let bytes = a.toString();
-  let Timestamp = bytes2int16(bytes[0], bytes[1])
-  let x = bytes2int16(abytes[2], bytes[3]) / 10
-  let y = bytes2int16(bytes[4], bytes[5]) / 10
-  let z = bytes2int16(bytes[6], bytes[7]) / 10
-  // if ((Timestamp + 100) > 65536){}
 
-  document.getElementById("gyroX").innerHTML = x;
-  document.getElementById("gyroY").innerHTML = y;
-  document.getElementById("gyroZ").innerHTML = z;
-  let output = ["pressure", Timestamp, x, y, z]
+  let Timestamp = bytes2int16(bytes[0], bytes[1])
+  let pressure = bytes4int32(bytes[2], bytes[3], bytes[4], bytes[5]) / 100
+
+
+  let output = ["pressure", Timestamp, pressure]
   log(JSON.stringify(output))
   sensordata.push(output);
+  // if ((Timestamp + 100) > 65536){}
 
   // return {
   //   Timestamp: Timestamp,
-  //   x: x,
-  //   y: y,
-  //   z: z,
+  //   pressure: pressure,
   // }
 }
-

@@ -96,7 +96,7 @@ function Magnetometer_func(event) {
   let z = bytes2int16(bytes[6], bytes[7])
   // if ((Timestamp + 100) > 65536){}
 
-  let output = ["Magnetometer", Timestamp,x,y,z]
+  let output = ["magnetometer", Timestamp,x,y,z]
   log(JSON.stringify(output))
   sensordata.push(output);
   // return {
