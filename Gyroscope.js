@@ -87,10 +87,10 @@ function gyroscope_func(event) {
   }
   let bytes = a;
   // let bytes = a.toString();
-  let Timestamp = bytes2int16(bytes[0], bytes[1])
-  let x = bytes2int16(bytes[2], bytes[3]) / 10
-  let y = bytes2int16(bytes[4], bytes[5]) / 10
-  let z = bytes2int16(bytes[6], bytes[7]) / 10
+  let Timestamp = bytes2int16([bytes[0], bytes[1]])
+  let x = bytes2int16([bytes[2], bytes[3]]) / 10
+  let y = bytes2int16([bytes[4], bytes[5]]) / 10
+  let z = bytes2int16([bytes[6], bytes[7]]) / 10
   // if ((Timestamp + 100) > 65536){}
 
   document.getElementById("gyroX").innerHTML = x;
