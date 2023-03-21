@@ -8,7 +8,7 @@ startBtn.addEventListener("click", onStartButtonClick);
 stopBtn.addEventListener("click", onStopButtonClick);
 
 function log(text) {
-  // document.querySelector("#log").value += text + "\n"
+  document.querySelector("#log").value += text + "\n"
 }
 
 async function onStartButtonClick() {
