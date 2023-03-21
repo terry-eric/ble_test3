@@ -317,7 +317,6 @@ function gyroscope_func(event) {
   }
   let bytes = a;
   // let bytes = a.toString();
-  // log(JSON.stringify(bytes))
   let Timestamp = bytes2int16([bytes[0], bytes[1]])
   let x = bytes2int16([bytes[2], bytes[3]]) / 10
   let y = bytes2int16([bytes[4], bytes[5]]) / 10
@@ -328,7 +327,7 @@ function gyroscope_func(event) {
   document.getElementById("gyroY").innerHTML = y;
   document.getElementById("gyroZ").innerHTML = z;
   let output = ["gyroscope", Timestamp, x, y, z]
-  log(JSON.stringify(output))
+  // log(JSON.stringify(bytes))
   sensordata.push(output);
 
   // return {
