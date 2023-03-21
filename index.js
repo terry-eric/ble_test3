@@ -283,9 +283,9 @@ function magnetometer_func(event) {
   let z = bytes2int16([bytes[6], bytes[7]])
   // if ((Timestamp + 100) > 65536){}
 
-  document.getElementById("gyroX").innerHTML = x;
-  document.getElementById("gyroY").innerHTML = y;
-  document.getElementById("gyroZ").innerHTML = z;
+  document.getElementById("magnX").innerHTML = x;
+  document.getElementById("magnY").innerHTML = y;
+  document.getElementById("magnZ").innerHTML = z;
 
 
   let output = ["magnetometer", Timestamp, x, y, z]
@@ -309,19 +309,23 @@ function gyroscope_func(event) {
   }
   let bytes = a;
   // let bytes = a.toString();
-  // log(bytes);
-  // log(JSON.stringify(value));
-  // log(JSON.stringify(d));
   let Timestamp = bytes2int16(bytes[0], bytes[1])
-  let x = bytes2int16(abytes[2], bytes[3]) / 10
+  let x = bytes2int16(bytes[2], bytes[3]) / 10
   let y = bytes2int16(bytes[4], bytes[5]) / 10
   let z = bytes2int16(bytes[6], bytes[7]) / 10
   // if ((Timestamp + 100) > 65536){}
 
-  return {
-    Timestamp: Timestamp,
-    x: x,
-    y: y,
-    z: z,
-  }
+  document.getElementById("gyroX").innerHTML = x;
+  document.getElementById("gyroY").innerHTML = y;
+  document.getElementById("gyroZ").innerHTML = z;
+  let output = ["gyroscope", Timestamp, x, y, z]
+  log(JSON.stringify(output))
+  sensordata.push(output);
+
+  // return {
+  //   Timestamp: Timestamp,
+  //   x: x,
+  //   y: y,
+  //   z: z,
+  // }
 }
