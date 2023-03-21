@@ -10,7 +10,7 @@ stopBtn.addEventListener("click", onStopButtonClick);
 function log(text) {
   // document.querySelector("#log").value += text + "\n"
 }
-gyroscope
+
 async function onStartButtonClick() {
   // add new
   let serviceUuid = "00000000-0001-11e1-9ab4-0002a5d5c51b";
@@ -81,6 +81,8 @@ async function onStopButtonClick() {
       acceleromter_func);
     magnetometer_Characteristic.removeEventListener('characteristicvaluechanged',
       magnetometer_func);
+    gyroscope_Characteristic.removeEventListener('characteristicvaluechanged',
+      gyroscope_func);
     log('> Notifications stopped');
 
     const csv = sensordata.map(row => row.join(',')).join('\n');
@@ -326,6 +328,7 @@ function gyroscope_func(event) {
   document.getElementById("gyroY").innerHTML = y;
   document.getElementById("gyroZ").innerHTML = z;
   let output = ["gyroscope", Timestamp, x, y, z]
+  log(JSON.stringify(output))
   sensordata.push(output);
 
   // return {
