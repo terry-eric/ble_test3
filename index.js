@@ -44,18 +44,18 @@ async function onStartButtonClick() {
     // acceleromter_event_Characteristic = await service.getCharacteristic(acceleromter_eventUuid);
 
     // add new
-    await battery_Characteristic.startNotifications();
-    await acceleromter_Characteristic.startNotifications();
+    // await battery_Characteristic.startNotifications();
+    // await acceleromter_Characteristic.startNotifications();
     await magnetometer_Characteristic.startNotifications();
     await gyroscope_Characteristic.startNotifications();
     // await acceleromter_event_Characteristic.startNotifications();
 
     log('> Notifications started');
     // add new
-    battery_Characteristic.addEventListener('characteristicvaluechanged',
-      battery_func);
-    acceleromter_Characteristic.addEventListener('characteristicvaluechanged',
-      acceleromter_func);
+    // battery_Characteristic.addEventListener('characteristicvaluechanged',
+    //   battery_func);
+    // acceleromter_Characteristic.addEventListener('characteristicvaluechanged',
+    //   acceleromter_func);
     magnetometer_Characteristic.addEventListener('characteristicvaluechanged',
       magnetometer_func);
     gyroscope_Characteristic.addEventListener('characteristicvaluechanged',
