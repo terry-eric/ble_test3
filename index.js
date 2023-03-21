@@ -1,4 +1,4 @@
-var battery_Characteristic, acceleromter_Characteristic, magnetometer_Characteristic;
+var battery_Characteristic, acceleromter_Characteristic, magnetometer_Characteristic, gyroscope_Characteristic;
 const sensordata = [];
 
 let startBtn = document.querySelector('#start');
@@ -10,7 +10,7 @@ stopBtn.addEventListener("click", onStopButtonClick);
 function log(text) {
   // document.querySelector("#log").value += text + "\n"
 }
-
+gyroscope
 async function onStartButtonClick() {
   // add new
   let serviceUuid = "00000000-0001-11e1-9ab4-0002a5d5c51b";
@@ -18,12 +18,13 @@ async function onStartButtonClick() {
   let acceleromterUuid = "00800000-0001-11e1-ac36-0002a5d5c51b";
   // let acceleromter_eventUuid = "00000400-0001-11e1-ac36-0002a5d5c51b";
   let magnetometerUuid = "00200000-0001-11e1-ac36-0002a5d5c51b";
+  let gyroscopeUuid = "00400000-0001-11e1-ac36-0002a5d5c51b";
 
   try {
     log('Requesting Bluetooth Device...');
     const device = await navigator.bluetooth.requestDevice({
       // add newDD
-      optionalServices: [serviceUuid, batteryUuid, acceleromterUuid, magnetometerUuid],
+      optionalServices: [serviceUuid, batteryUuid, acceleromterUuid, magnetometerUuid, gyroscopeUuid],
       // optionalServices: [serviceUuid, magnetometerUuid],
       acceptAllDevices: true
     });
@@ -39,12 +40,14 @@ async function onStartButtonClick() {
     battery_Characteristic = await service.getCharacteristic(batteryUuid);
     acceleromter_Characteristic = await service.getCharacteristic(acceleromterUuid);
     magnetometer_Characteristic = await service.getCharacteristic(magnetometerUuid);
+    gyroscope_Characteristic = await service.getCharacteristic(gyroscopeUuid);
     // acceleromter_event_Characteristic = await service.getCharacteristic(acceleromter_eventUuid);
 
     // add new
     await battery_Characteristic.startNotifications();
     await acceleromter_Characteristic.startNotifications();
     await magnetometer_Characteristic.startNotifications();
+    await gyroscope_Characteristic.startNotifications();
     // await acceleromter_event_Characteristic.startNotifications();
 
     log('> Notifications started');
@@ -55,6 +58,8 @@ async function onStartButtonClick() {
       acceleromter_func);
     magnetometer_Characteristic.addEventListener('characteristicvaluechanged',
       magnetometer_func);
+    gyroscope_Characteristic.addEventListener('characteristicvaluechanged',
+      gyroscopeUuid);
     // acceleromter_event_Characteristic.addEventListener('characteristicvaluechanged',
     // acceleromter_event_func);
 
@@ -69,6 +74,7 @@ async function onStopButtonClick() {
     await battery_Characteristic.stopNotifications();
     await acceleromter_Characteristic.stopNotifications();
     await magnetometer_Characteristic.stopNotifications();
+    await gyroscope_Characteristic.stopNotifications();
     battery_Characteristic.removeEventListener('characteristicvaluechanged',
       battery_func);
     acceleromter_Characteristic.removeEventListener('characteristicvaluechanged',
@@ -309,17 +315,17 @@ function gyroscope_func(event) {
   }
   let bytes = a;
   // let bytes = a.toString();
-  let Timestamp = bytes2int16(bytes[0], bytes[1])
-  let x = bytes2int16(bytes[2], bytes[3]) / 10
-  let y = bytes2int16(bytes[4], bytes[5]) / 10
-  let z = bytes2int16(bytes[6], bytes[7]) / 10
+  // log(JSON.stringify(bytes))
+  let Timestamp = bytes2int16([bytes[0], bytes[1]])
+  let x = bytes2int16([bytes[2], bytes[3]]) / 10
+  let y = bytes2int16([bytes[4], bytes[5]]) / 10
+  let z = bytes2int16([bytes[6], bytes[7]]) / 10
   // if ((Timestamp + 100) > 65536){}
 
   document.getElementById("gyroX").innerHTML = x;
   document.getElementById("gyroY").innerHTML = y;
   document.getElementById("gyroZ").innerHTML = z;
   let output = ["gyroscope", Timestamp, x, y, z]
-  log(JSON.stringify(output))
   sensordata.push(output);
 
   // return {
