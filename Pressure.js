@@ -1,4 +1,4 @@
-var gyroscope_Characteristic;
+var pressure_Characteristic;
 const sensordata = [];
 
 let startBtn = document.querySelector('#start');
@@ -13,13 +13,13 @@ function log(text) {
 async function onStartButtonClick() {
   // add new
   let serviceUuid = "00000000-0001-11e1-9ab4-0002a5d5c51b";
-  let gyroscopeUuid = "00400000-0001-11e1-ac36-0002a5d5c51b";
+  let pressureUuid = "00100000-0001-11e1-ac36-0002a5d5c51b";
 
   try {
     log('Requesting Bluetooth Device...');
     const device = await navigator.bluetooth.requestDevice({
       // add newDD
-      optionalServices: [serviceUuid, gyroscopeUuid],
+      optionalServices: [serviceUuid, pressureUuid],
       acceptAllDevices: true
     });
 
@@ -31,13 +31,13 @@ async function onStartButtonClick() {
 
     log('getting Characteristic...');
     // add new
-    gyroscope_Characteristic = await service.getCharacteristic(gyroscopeUuid);
+    pressure_Characteristic = await service.getCharacteristic(pressureUuid);
     // Acceleromter_event_Characteristic = await service.getCharacteristic(Acceleromter_eventUuid);
-    await gyroscope_Characteristic.startNotifications();
+    await pressure_Characteristic.startNotifications();
     log('> Notifications started');
     // add new
-    gyroscope_Characteristic.addEventListener('characteristicvaluechanged',
-    gyroscope_func);
+    pressure_Characteristic.addEventListener('characteristicvaluechanged',
+    pressure_func);
 
   } catch (error) {
     log('Argh! ' + error);
@@ -47,9 +47,9 @@ async function onStartButtonClick() {
 async function onStopButtonClick() {
 
   try {
-    await gyroscope_Characteristic.stopNotifications();
-    gyroscope_Characteristic.removeEventListener('characteristicvaluechanged',
-    gyroscope_func);
+    await pressure_Characteristic.stopNotifications();
+    pressure_Characteristic.removeEventListener('characteristicvaluechanged',
+    pressure_func);
     log('> Notifications stopped');
 
     const csv = sensordata.map(row => row.join(',')).join('\n');
@@ -78,7 +78,7 @@ function bytes2int16(bytes) {
   return view.getInt16(0, true); // true indicates little-endian byte order
 }
 // 0x00400000-0001-11e1-ac36-0002a5d5c51b
-function gyroscope_func(event) {
+function pressure_func(event) {
 
   let value = event.target.value;
   let a = [];
@@ -96,7 +96,7 @@ function gyroscope_func(event) {
   document.getElementById("gyroX").innerHTML = x;
   document.getElementById("gyroY").innerHTML = y;
   document.getElementById("gyroZ").innerHTML = z;
-  let output = ["gyroscope", Timestamp, x, y, z]
+  let output = ["pressure", Timestamp, x, y, z]
   log(JSON.stringify(output))
   sensordata.push(output);
 
