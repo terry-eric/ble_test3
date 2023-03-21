@@ -8,7 +8,7 @@ startBtn.addEventListener("click", onStartButtonClick);
 stopBtn.addEventListener("click", onStopButtonClick);
 
 function log(text) {
-  // document.querySelector("#log").value += text + "\n"
+  document.querySelector("#log").value += text + "\n"
 }
 
 async function onStartButtonClick() {
@@ -145,7 +145,7 @@ function battery_func(event) {
 
   let output = ["battery", Timestamp, percentage, voltage, current, status]
   sensordata.push(output);
-  log(JSON.stringify(output))
+  // log(JSON.stringify(output))
   // return {
   //   Timestamp: Timestamp,
   //   percentage: percentage,
@@ -189,7 +189,7 @@ function acceleromter_func(event) {
   document.getElementById("accY").innerHTML = y;
   document.getElementById("accZ").innerHTML = z;
   let output = ["acceleromter", Timestamp, x, y, z]
-  log(JSON.stringify(output))
+  // log(JSON.stringify(output))
   sensordata.push(output);
   // return {
   //   Timestamp: Timestamp,
@@ -297,7 +297,7 @@ function magnetometer_func(event) {
 
 
   let output = ["magnetometer", Timestamp, x, y, z]
-  log(JSON.stringify(output))
+  // log(JSON.stringify(output))
   sensordata.push(output);
   // return {
   //   Timestamp: Timestamp,
@@ -327,7 +327,7 @@ function gyroscope_func(event) {
   document.getElementById("gyroY").innerHTML = y;
   document.getElementById("gyroZ").innerHTML = z;
   let output = ["gyroscope", Timestamp, x, y, z]
-  // log(JSON.stringify(bytes))
+  log(JSON.stringify(bytes))
   sensordata.push(output);
 
   // return {
