@@ -1,4 +1,4 @@
-var battery_Characteristic, Acceleromter_Characteristic, magnetometer_Characteristic;
+var battery_Characteristic, acceleromter_Characteristic, magnetometer_Characteristic;
 const sensordata = [];
 
 let startBtn = document.querySelector('#start');
@@ -15,15 +15,15 @@ async function onStartButtonClick() {
   // add new
   let serviceUuid = "00000000-0001-11e1-9ab4-0002a5d5c51b";
   let batteryUuid = "00020000-0001-11e1-ac36-0002a5d5c51b";
-  let AcceleromterUuid = "00800000-0001-11e1-ac36-0002a5d5c51b";
-  // let Acceleromter_eventUuid = "00000400-0001-11e1-ac36-0002a5d5c51b";
+  let acceleromterUuid = "00800000-0001-11e1-ac36-0002a5d5c51b";
+  // let acceleromter_eventUuid = "00000400-0001-11e1-ac36-0002a5d5c51b";
   let magnetometerUuid = "00200000-0001-11e1-ac36-0002a5d5c51b";
 
   try {
     log('Requesting Bluetooth Device...');
     const device = await navigator.bluetooth.requestDevice({
       // add newDD
-      optionalServices: [serviceUuid, batteryUuid, AcceleromterUuid, magnetometerUuid],
+      optionalServices: [serviceUuid, batteryUuid, acceleromterUuid, magnetometerUuid],
       // optionalServices: [serviceUuid, magnetometerUuid],
       acceptAllDevices: true
     });
@@ -37,26 +37,26 @@ async function onStartButtonClick() {
     log('Getting Characteristic...');
     // add new
     battery_Characteristic = await service.getCharacteristic(batteryUuid);
-    Acceleromter_Characteristic = await service.getCharacteristic(AcceleromterUuid);
+    acceleromter_Characteristic = await service.getCharacteristic(acceleromterUuid);
     magnetometer_Characteristic = await service.getCharacteristic(magnetometerUuid);
-    // Acceleromter_event_Characteristic = await service.getCharacteristic(Acceleromter_eventUuid);
+    // acceleromter_event_Characteristic = await service.getCharacteristic(acceleromter_eventUuid);
 
     // add new
     await battery_Characteristic.startNotifications();
-    await Acceleromter_Characteristic.startNotifications();
+    await acceleromter_Characteristic.startNotifications();
     await magnetometer_Characteristic.startNotifications();
-    // await Acceleromter_event_Characteristic.startNotifications();
+    // await acceleromter_event_Characteristic.startNotifications();
 
     log('> Notifications started');
     // add new
     battery_Characteristic.addEventListener('characteristicvaluechanged',
       battery_func);
-    Acceleromter_Characteristic.addEventListener('characteristicvaluechanged',
-      Acceleromter_func);
+    acceleromter_Characteristic.addEventListener('characteristicvaluechanged',
+      acceleromter_func);
     magnetometer_Characteristic.addEventListener('characteristicvaluechanged',
-      Magnetometer_func);
-    // Acceleromter_event_Characteristic.addEventListener('characteristicvaluechanged',
-    // Acceleromter_event_func);
+      magnetometer_func);
+    // acceleromter_event_Characteristic.addEventListener('characteristicvaluechanged',
+    // acceleromter_event_func);
 
   } catch (error) {
     log('Argh! ' + error);
@@ -67,14 +67,14 @@ async function onStopButtonClick() {
 
   try {
     await battery_Characteristic.stopNotifications();
-    await Acceleromter_Characteristic.stopNotifications();
+    await acceleromter_Characteristic.stopNotifications();
     await magnetometer_Characteristic.stopNotifications();
     battery_Characteristic.removeEventListener('characteristicvaluechanged',
       battery_func);
-    Acceleromter_Characteristic.removeEventListener('characteristicvaluechanged',
-      Acceleromter_func);
+    acceleromter_Characteristic.removeEventListener('characteristicvaluechanged',
+      acceleromter_func);
     magnetometer_Characteristic.removeEventListener('characteristicvaluechanged',
-      Magnetometer_func);
+      magnetometer_func);
     log('> Notifications stopped');
 
     const csv = sensordata.map(row => row.join(',')).join('\n');
@@ -148,7 +148,7 @@ function battery_func(event) {
 }
 
 // 0x00800000-0001-11e1-ac36-0002a5d5c51b 
-function Acceleromter_func(event) {
+function acceleromter_func(event) {
 
   let value = event.target.value;
   let a = [];
@@ -180,7 +180,7 @@ function Acceleromter_func(event) {
   document.getElementById("accX").innerHTML = x;
   document.getElementById("accY").innerHTML = y;
   document.getElementById("accZ").innerHTML = z;
-  let output = ["Acceleromter", Timestamp, x, y, z]
+  let output = ["acceleromter", Timestamp, x, y, z]
   log(JSON.stringify(output))
   sensordata.push(output);
   // return {
@@ -192,7 +192,7 @@ function Acceleromter_func(event) {
 }
 
 // 0x00000400-0001-11e1-ac36-0002a5d5c51b
-function Acceleromter_event_func(event) {
+function acceleromter_event_func(event) {
 
   let value = event.target.value;
   let a = [];
@@ -208,7 +208,7 @@ function Acceleromter_event_func(event) {
   let acc_event = bytes[2]
   let steps = bytes2int16(bytes[3], bytes[4])
   // if ((Timestamp + 100) > 65536){}
-  let output = ["Acceleromter_event", Timestamp, acc_event, steps]
+  let output = ["acceleromter_event", Timestamp, acc_event, steps]
   log(JSON.stringify(output))
   // return {
   //   Timestamp: Timestamp,
@@ -218,7 +218,7 @@ function Acceleromter_event_func(event) {
 }
 
 //  0x00040000-0001-11e1-ac36-0002a5d5c51b/0x00010000-0001-11e1-ac36-0002a5d5c51b  one or sec
-function Temperature_func(event) {
+function temperature_func(event) {
 
   let value = event.target.value;
   let a = [];
@@ -231,17 +231,17 @@ function Temperature_func(event) {
   // log(JSON.stringify(value));
   // log(JSON.stringify(d));
   let Timestamp = bytes2int16(bytes[0], bytes[1])
-  let Temperature = bytes2int16(bytes[2], bytes[3]) / 10
+  let temperature = bytes2int16(bytes[2], bytes[3]) / 10
   // if ((Timestamp + 100) > 65536){}
 
   return {
     Timestamp: Timestamp,
-    Temperature: Temperature,
+    temperature: temperature,
   }
 }
 
 // 0x00100000-0001-11e1-ac36-0002a5d5c51b
-function Pressure_func(event) {
+function pressure_func(event) {
 
   let value = event.target.value;
   let a = [];
@@ -254,18 +254,18 @@ function Pressure_func(event) {
   // log(JSON.stringify(value));
   // log(JSON.stringify(d));
   let Timestamp = bytes2int16(bytes[0], bytes[1])
-  let Pressure = bytes4int32(bytes[2], bytes[3], bytes[4], bytes[5]) / 100
+  let pressure = bytes4int32(bytes[2], bytes[3], bytes[4], bytes[5]) / 100
 
   // if ((Timestamp + 100) > 65536){}
 
   return {
     Timestamp: Timestamp,
-    Pressure: Pressure,
+    pressure: pressure,
   }
 }
 
 // 0x00200000-0001-11e1-ac36-0002a5d5c51b
-function Magnetometer_func(event) {
+function magnetometer_func(event) {
 
   let value = event.target.value;
   let a = [];
@@ -288,7 +288,7 @@ function Magnetometer_func(event) {
   document.getElementById("gyroZ").innerHTML = z;
 
 
-  let output = ["Magnetometer", Timestamp, x, y, z]
+  let output = ["magnetometer", Timestamp, x, y, z]
   log(JSON.stringify(output))
   sensordata.push(output);
   // return {
@@ -300,7 +300,7 @@ function Magnetometer_func(event) {
 }
 
 // 0x00400000-0001-11e1-ac36-0002a5d5c51b
-function Gyroscope_func(event) {
+function gyroscope_func(event) {
 
   let value = event.target.value;
   let a = [];
