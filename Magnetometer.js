@@ -23,7 +23,7 @@ function magnetometer_func(event) {
 
 
   let output = ["magnetometer", Timestamp, x, y, z]
-  log(JSON.stringify(output))
+  // log(JSON.stringify(output))
   sensordata.push(output);
   // return {
   //   Timestamp: Timestamp,

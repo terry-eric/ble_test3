@@ -16,7 +16,7 @@ function accelerometer_event_func(event) {
     let steps = bytes2int16(bytes[3], bytes[4])
     // if ((Timestamp + 100) > 65536){}
     let output = ["accelerometer_event", Timestamp, acc_event, steps]
-    log(JSON.stringify(output))
+    // log(JSON.stringify(output))
     // return {
     //   Timestamp: Timestamp,
     //   acc_event: acc_event,

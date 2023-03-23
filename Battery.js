@@ -27,7 +27,7 @@ function battery_func(event) {
   
     let output = ["battery", Timestamp, percentage, voltage, current, status]
     sensordata.push(output);
-    log(JSON.stringify(output))
+    // log(JSON.stringify(output))
     // return {
     //   Timestamp: Timestamp,
     //   percentage: percentage,

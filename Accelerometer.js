@@ -32,8 +32,8 @@ function accelerometer_func(event) {
     document.getElementById("accY").innerHTML = y;
     document.getElementById("accZ").innerHTML = z;
     let output = ["accelerometer", Timestamp, x, y, z]
-    log(JSON.stringify(output))
     sensordata.push(output);
+    // log(JSON.stringify(output))
     // return {
     //   Timestamp: Timestamp,
     //   x: x,

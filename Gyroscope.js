@@ -18,7 +18,7 @@ function gyroscope_func(event) {
   document.getElementById("gyroY").innerHTML = y;
   document.getElementById("gyroZ").innerHTML = z;
   let output = ["gyroscope", Timestamp, x, y, z]
-  log(JSON.stringify(bytes))
+//   log(JSON.stringify(bytes))
   sensordata.push(output);
 
   // return {

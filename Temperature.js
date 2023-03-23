@@ -19,7 +19,7 @@ function temperature_func(event) {
     let output = ["temperature", temperature]
     log(JSON.stringify(bytes))
     sensordata.push(output);
-
+    log(JSON.stringify(output));
     // return {
     //   Timestamp: Timestamp,
     //   temperature: temperature,
