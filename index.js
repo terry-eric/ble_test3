@@ -1,4 +1,4 @@
-var battery_Characteristic, accelerometer_Characteristic, magnetometer_Characteristic, gyroscope_Characteristic;
+var battery_Characteristic, accelerometer_Characteristic, magnetometer_Characteristic, gyroscope_Characteristic, temperature_Characteristic;
 const sensordata = [];
 
 let startBtn = document.querySelector('#start');
@@ -26,7 +26,7 @@ async function onStartButtonClick() {
     log('Requesting Bluetooth Device...');
     const device = await navigator.bluetooth.requestDevice({
       // add newDD
-      optionalServices: [serviceUuid, batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid],
+      optionalServices: [serviceUuid, batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid, temperatureUuid],
       acceptAllDevices: true
     });
 
@@ -57,10 +57,16 @@ async function onStartButtonClick() {
     await gyroscope_Characteristic.startNotifications();
     gyroscope_Characteristic.addEventListener('characteristicvaluechanged',
       gyroscope_func);
-  
+
+    // accelerometer_event_Characteristic = await service.getCharacteristic(accelerometer_eventUuid);
     // await accelerometer_event_Characteristic.startNotifications();
     // accelerometer_event_Characteristic.addEventListener('characteristicvaluechanged',
     // accelerometer_event_func);
+
+    temperature_Characteristic = await service.getCharacteristic(temperatureUuid);
+    await temperature_Characteristic.startNotifications();
+    temperature_Characteristic.addEventListener('characteristicvaluechanged',
+      temperature_func);
 
     log('> Notifications started');
   } catch (error) {
@@ -86,7 +92,7 @@ async function onStopButtonClick() {
     await gyroscope_Characteristic.stopNotifications();
     gyroscope_Characteristic.removeEventListener('characteristicvaluechanged',
       gyroscope_func);
-      
+
     log('> Notifications stopped');
 
     const csv = sensordata.map(row => row.join(',')).join('\n');

@@ -11,12 +11,17 @@ function temperature_func(event) {
     // log(bytes);
     // log(JSON.stringify(value));
     // log(JSON.stringify(d));
-    let Timestamp = bytes2int16(bytes[0], bytes[1])
-    let temperature = bytes2int16(bytes[2], bytes[3]) / 10
+    let Timestamp = bytes2int16([bytes[0], bytes[1]])
+    let temperature = bytes2int16([bytes[2], bytes[3]]) / 10
     // if ((Timestamp + 100) > 65536){}
   
-    return {
-      Timestamp: Timestamp,
-      temperature: temperature,
-    }
+    document.getElementById("gyroY").innerHTML = y;
+    let output = ["temperature", temperature]
+    log(JSON.stringify(bytes))
+    sensordata.push(output);
+
+    // return {
+    //   Timestamp: Timestamp,
+    //   temperature: temperature,
+    // }
   }
