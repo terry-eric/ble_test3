@@ -1,8 +1,5 @@
 // 0x00400000-0001-11e1-ac36-0002a5d5c51b
 function gyroscope_func(event) {
-  console.log(JSON.stringify(event.target))
-  console.log(event.target);
-  console.log("hi")
 
   let value = event.target.value;
   let a = [];
@@ -21,7 +18,7 @@ function gyroscope_func(event) {
   document.getElementById("gyroY").innerHTML = y;
   document.getElementById("gyroZ").innerHTML = z;
   let output = ["gyroscope", Timestamp, x, y, z]
-  // log(JSON.stringify(bytes))
+  log(JSON.stringify(bytes))
   sensordata.push(output);
 
   // return {
@@ -31,4 +28,3 @@ function gyroscope_func(event) {
   //   z: z,
   // }
 }
-
