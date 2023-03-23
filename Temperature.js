@@ -7,6 +7,7 @@ function temperature_func(event) {
       a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
     }
     let bytes = a;
+    log(JSON.stringify(bytes))
     // let bytes = a.toString();
     // log(bytes);
     // log(JSON.stringify(value));
@@ -17,7 +18,6 @@ function temperature_func(event) {
   
     document.getElementById("gyroY").innerHTML = y;
     let output = ["temperature", temperature]
-    log(JSON.stringify(bytes))
     sensordata.push(output);
     log(JSON.stringify(output));
     // return {
