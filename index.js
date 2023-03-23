@@ -93,6 +93,10 @@ async function onStopButtonClick() {
     gyroscope_Characteristic.removeEventListener('characteristicvaluechanged',
       gyroscope_func);
 
+    await temperature_Characteristic.stopNotifications();
+    temperature_Characteristic.removeEventListener('characteristicvaluechanged',
+      temperature_func);
+
     log('> Notifications stopped');
 
     const csv = sensordata.map(row => row.join(',')).join('\n');
