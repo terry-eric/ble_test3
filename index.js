@@ -39,23 +39,29 @@ async function onStartButtonClick() {
 
     log('Getting Characteristic...');
     // add new
-    battery_Characteristic = await service.getCharacteristic(batteryUuid);
-    await battery_Characteristic.startNotifications();
+    let characteristicTarget = [battery_Characteristic, accelerometer_Characteristic, magnetometer_Characteristic, gyroscope_Characteristic]
+    for (const [index, characteristicTarget] of characteristicTarget.entries()) {
+      characteristicTarget.addEventListener("click", callback)
+      await characteristicTarget.startNotifications();
+    }
+
+    // battery_Characteristic = await service.getCharacteristic(batteryUuid);
+    // await battery_Characteristic.startNotifications();
     battery_Characteristic.addEventListener('characteristicvaluechanged',
       battery_func);
 
-    accelerometer_Characteristic = await service.getCharacteristic(accelerometerUuid);
-    await accelerometer_Characteristic.startNotifications();
+    // accelerometer_Characteristic = await service.getCharacteristic(accelerometerUuid);
+    // await accelerometer_Characteristic.startNotifications();
     accelerometer_Characteristic.addEventListener('characteristicvaluechanged',
       accelerometer_func);
 
-    magnetometer_Characteristic = await service.getCharacteristic(magnetometerUuid);
-    await magnetometer_Characteristic.startNotifications();
+    // magnetometer_Characteristic = await service.getCharacteristic(magnetometerUuid);
+    // await magnetometer_Characteristic.startNotifications();
     magnetometer_Characteristic.addEventListener('characteristicvaluechanged',
       magnetometer_func);
 
-    gyroscope_Characteristic = await service.getCharacteristic(gyroscopeUuid);
-    await gyroscope_Characteristic.startNotifications();
+    // gyroscope_Characteristic = await service.getCharacteristic(gyroscopeUuid);
+    // await gyroscope_Characteristic.startNotifications();
     gyroscope_Characteristic.addEventListener('characteristicvaluechanged',
       gyroscope_func);
 
@@ -75,6 +81,9 @@ async function onStartButtonClick() {
   }
 }
 
+function callback(event) {
+  console.log(event.currentTarget.id)
+}
 async function onStopButtonClick() {
 
   try {
