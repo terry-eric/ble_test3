@@ -1,4 +1,3 @@
-magnetometerData = [];
 // 0x00200000-0001-11e1-ac36-0002a5d5c51b
 function magnetometer_func(event) {
 

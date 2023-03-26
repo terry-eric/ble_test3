@@ -1,4 +1,3 @@
-gyroscopeData = [];
 // 0x00400000-0001-11e1-ac36-0002a5d5c51b
 function gyroscope_func(event) {
 

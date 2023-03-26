@@ -1,4 +1,5 @@
 var battery_Characteristic, accelerometer_Characteristic, magnetometer_Characteristic, gyroscope_Characteristic, temperature_Characteristic;
+const batteryData=[], accelerometerData=[], gyroscopeData=[], magnetometerData=[];
 const sensordata = [batteryData, accelerometerData, gyroscopeData, magnetometerData];
 
 let startBtn = document.querySelector('#start');
