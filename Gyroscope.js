@@ -1,3 +1,4 @@
+const gyroscopeData = [];
 // 0x00400000-0001-11e1-ac36-0002a5d5c51b
 function gyroscope_func(event) {
 
@@ -18,8 +19,8 @@ function gyroscope_func(event) {
   document.getElementById("gyroY").innerHTML = y;
   document.getElementById("gyroZ").innerHTML = z;
   let output = ["gyroscope", Timestamp, x, y, z]
-//   log(JSON.stringify(bytes))
-  sensordata.push(output);
+  //   log(JSON.stringify(bytes))
+  gyroscopeData.push(output);
 
   // return {
   //   Timestamp: Timestamp,

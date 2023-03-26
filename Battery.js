@@ -1,3 +1,4 @@
+const batteryData = [];
 // 00020000-0001-11e1-ac36-0002a5d5c51b
 function battery_func(event) {
 
@@ -26,7 +27,7 @@ function battery_func(event) {
     document.getElementById("batStatus").innerHTML = status;
   
     let output = ["battery", Timestamp, percentage, voltage, current, status]
-    sensordata.push(output);
+    batteryData.push(output);
     // log(JSON.stringify(output))
     // return {
     //   Timestamp: Timestamp,

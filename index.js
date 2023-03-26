@@ -1,5 +1,5 @@
 var battery_Characteristic, accelerometer_Characteristic, magnetometer_Characteristic, gyroscope_Characteristic, temperature_Characteristic;
-const sensordata = [];
+const sensordata = [batteryData, accelerometerData, gyroscopeData, magnetometerData];
 
 let startBtn = document.querySelector('#start');
 let stopBtn = document.querySelector('#stop');
@@ -147,21 +147,21 @@ var chart = new Chart(canvas, {
         data: [],
         borderColor: 'red',
         backgroundColor: 'rgba(255, 0, 0, 0.1)',
-        yAxisID: 'y-axis-1',
+        fill: false,
       },
       {
         label: 'Y',
         data: [],
         borderColor: 'green',
         backgroundColor: 'rgba(0, 255, 0, 0.1)',
-        yAxisID: 'y-axis-2',
+        fill: false,
       },
       {
         label: 'Z',
         data: [],
         borderColor: 'blue',
         backgroundColor: 'rgba(0, 0, 255, 0.1)',
-        yAxisID: 'y-axis-3',
+        fill: false,
       },
     ],
   },
@@ -182,63 +182,22 @@ var chart = new Chart(canvas, {
       ],
       yAxes: [
         {
-          id: 'y-axis-1',
-          type: 'linear',
-          position: 'left',
-          ticks: {
-            beginAtZero: true,
-          },
-        },
-        {
-          id: 'y-axis-2',
-          type: 'linear',
-          position: 'right',
-          ticks: {
-            beginAtZero: true,
-          },
-        },
-        {
-          id: 'y-axis-3',
-          type: 'linear',
-          position: 'right',
           ticks: {
             beginAtZero: true,
           },
         },
       ],
     },
+    showLines: true,
   },
 });
-
-var data1 = chart.data.datasets[0].data;
-var data2 = chart.data.datasets[1].data;
-var data3 = chart.data.datasets[2].data;
+var dataChart =  accelerometerData;
+dataChart[2] = chart.data.datasets[0].data;
+dataChart[3] = chart.data.datasets[1].data;
+dataChart[4] = chart.data.datasets[2].data;
 var i = 0;
+chart.update();
 
-setInterval(function () {
-  var now = new Date();
-  data1.push({
-    x: now,
-    y: Math.random() * 100,
-  });
-  data2.push({
-    x: now,
-    y: Math.random() * 1000,
-  });
-  data3.push({
-    x: now,
-    y: Math.random() * 10,
-  });
-  i++;
-
-  if (i > 10) {
-    data1.shift();
-    data2.shift();
-    data3.shift();
-  }
-
-  chart.update();
-}, 1000);
 
 
 

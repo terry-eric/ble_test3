@@ -1,3 +1,4 @@
+const magnetometerData = [];
 // 0x00200000-0001-11e1-ac36-0002a5d5c51b
 function magnetometer_func(event) {
 
@@ -24,7 +25,7 @@ function magnetometer_func(event) {
 
   let output = ["magnetometer", Timestamp, x, y, z]
   // log(JSON.stringify(output))
-  sensordata.push(output);
+  magnetometerData.push(output);
   // return {
   //   Timestamp: Timestamp,
   //   x: x,

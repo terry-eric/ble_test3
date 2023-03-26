@@ -1,3 +1,4 @@
+const accelerometerData = [];
 // 0x00800000-0001-11e1-ac36-0002a5d5c51b 
 function accelerometer_func(event) {
 
@@ -32,7 +33,7 @@ function accelerometer_func(event) {
     document.getElementById("accY").innerHTML = y;
     document.getElementById("accZ").innerHTML = z;
     let output = ["accelerometer", Timestamp, x, y, z]
-    sensordata.push(output);
+    accelerometerData.push(output);
     // log(JSON.stringify(output))
     // return {
     //   Timestamp: Timestamp,
