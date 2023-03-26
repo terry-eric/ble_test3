@@ -135,8 +135,8 @@ function bytes4int32(one, two, three, four) {
 
 
 
-var canvas = document.getElementById('dataChart');
-var select = document.getElementById('dataSelect');
+var canvas = document.getElementById('myChart');
+var select = document.getElementById('dataChart');
 var dataChart = accelerometerData;
 
 // 當選取選單時
