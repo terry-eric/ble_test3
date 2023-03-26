@@ -12,16 +12,17 @@ function log(text) {
   document.querySelector("#log").value += text + "\n"
 }
 
+// add new
+let serviceUuid = "00000000-0001-11e1-9ab4-0002a5d5c51b";
+let batteryUuid = "00020000-0001-11e1-ac36-0002a5d5c51b";
+let accelerometerUuid = "00800000-0001-11e1-ac36-0002a5d5c51b";
+let accelerometer_eventUuid = "00000400-0001-11e1-ac36-0002a5d5c51b";//n
+let magnetometerUuid = "00200000-0001-11e1-ac36-0002a5d5c51b";
+let gyroscopeUuid = "00400000-0001-11e1-ac36-0002a5d5c51b";
+let temperatureUuid = "00040000-0001-11e1-ac36-0002a5d5c51b";
+let pressureUuid = "00100000-0001-11e1-ac36-0002a5d5c51b";
+
 async function onStartButtonClick() {
-  // add new
-  let serviceUuid = "00000000-0001-11e1-9ab4-0002a5d5c51b";
-  let batteryUuid = "00020000-0001-11e1-ac36-0002a5d5c51b";
-  let accelerometerUuid = "00800000-0001-11e1-ac36-0002a5d5c51b";
-  let accelerometer_eventUuid = "00000400-0001-11e1-ac36-0002a5d5c51b";//n
-  let magnetometerUuid = "00200000-0001-11e1-ac36-0002a5d5c51b";
-  let gyroscopeUuid = "00400000-0001-11e1-ac36-0002a5d5c51b";
-  let temperatureUuid = "00040000-0001-11e1-ac36-0002a5d5c51b";
-  let pressureUuid = "00100000-0001-11e1-ac36-0002a5d5c51b";
 
   try {
     log('Requesting Bluetooth Device...');
