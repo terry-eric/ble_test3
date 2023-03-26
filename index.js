@@ -1,11 +1,11 @@
 var battery_Characteristic, accelerometer_Characteristic, magnetometer_Characteristic, gyroscope_Characteristic, temperature_Characteristic;
-const batteryData=[], accelerometerData=[], gyroscopeData=[], magnetometerData=[];
+const batteryData = [], accelerometerData = [], gyroscopeData = [], magnetometerData = [];
 const sensordata = [batteryData, accelerometerData, gyroscopeData, magnetometerData];
 
 let startBtn = document.querySelector('#start');
 let stopBtn = document.querySelector('#stop');
 // 取得 canvas 元素
-var canvas = document.getElementById('myChart');
+const dataChart = document.querySelector('#dataChart');
 
 startBtn.addEventListener("click", onStartButtonClick);
 stopBtn.addEventListener("click", onStopButtonClick);
@@ -137,68 +137,68 @@ function bytes4int32(one, two, three, four) {
 
 
 
-var dataChart =  accelerometerData;
 var canvas = document.getElementById('myChart');
+var select = document.getElementById('dataSelect');
+var dataChart = accelerometerData;
 
-var chart = new Chart(canvas, {
-  type: 'line',
-  data: {
-    datasets: [
-      {
-        label: 'X',
-        data: dataChart[2],
-        borderColor: 'red',
-        backgroundColor: 'rgba(255, 0, 0, 0.1)',
-        fill: false,
-      },
-      {
-        label: 'Y',
-        data: dataChart[3],
-        borderColor: 'green',
-        backgroundColor: 'rgba(0, 255, 0, 0.1)',
-        fill: false,
-      },
-      {
-        label: 'Z',
-        data: dataChart[3],
-        borderColor: 'blue',
-        backgroundColor: 'rgba(0, 0, 255, 0.1)',
-        fill: false,
-      },
-    ],
-  },
-  options: {
-    animation: {
-      duration: 0, // 關閉動畫效果
-    },
-    scales: {
-      xAxes: [
+// 當選取選單時
+select.addEventListener('change', (event) => {
+  const chartType = event.target.value;
+  var chart = new Chart(canvas, {
+    type: 'line',
+    data: {
+      datasets: [
         {
-          type: 'time',
-          time: {
-            displayFormats: {
-              second: 'HH:mm:ss',
+          label: 'X',
+          data: dataChart[1],
+          borderColor: 'red',
+          backgroundColor: 'rgba(255, 0, 0, 0.1)',
+          fill: false,
+        },
+        {
+          label: 'Y',
+          data: dataChart[2],
+          borderColor: 'green',
+          backgroundColor: 'rgba(0, 255, 0, 0.1)',
+          fill: false,
+        },
+        {
+          label: 'Z',
+          data: dataChart[3],
+          borderColor: 'blue',
+          backgroundColor: 'rgba(0, 0, 255, 0.1)',
+          fill: false,
+        },
+      ],
+    },
+    options: {
+      animation: {
+        duration: 0, // 關閉動畫效果
+      },
+      scales: {
+        xAxes: [
+          {
+            type: 'time',
+            time: {
+              displayFormats: {
+                second: 'HH:mm:ss',
+              },
             },
           },
-        },
-      ],
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
+        ],
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+            },
           },
-        },
-      ],
+        ],
+      },
+      showLines: true,
     },
-    showLines: true,
-  },
+  });
 });
 
-// dataChart[2] = chart.data.datasets[0].data;
-// dataChart[3] = chart.data.datasets[1].data;
-// dataChart[4] = chart.data.datasets[2].data;
-// var i = 0;
-// chart.update();
 
 
 
