@@ -9,10 +9,12 @@
 
     <title>Document</title>
     <style>
-table, th, td {
-  border: 1px solid;
-  /* width: 100%; */
-}
+        table,
+        th,
+        td {
+            border: 1px solid;
+            /* width: 100%; */
+        }
     </style>
 </head>
 
@@ -20,7 +22,7 @@ table, th, td {
     <button id="start">start</button>
     <button id="stop">stop</button>
     <br><br>
-    
+
     <table>
         <tr>
             <td>
@@ -75,6 +77,13 @@ table, th, td {
             </td>
 
         </tr><br>
+        <label for="dataChart">選擇生成的圖表：</label>
+        <select name="dataChart" id="dataChart">
+            <option value="accelerometerChart">加速度</option>
+            <option value="gyroscopeChart">陀螺儀</option>
+            <option value="magnetometerChart">磁力計</option>
+        </select>
+
         <canvas id="myChart" style="width: 100%; height: 500px;"></canvas>
     </table>
     <br>

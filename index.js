@@ -146,21 +146,21 @@ var chart = new Chart(canvas, {
     datasets: [
       {
         label: 'X',
-        data: dataChart,
+        data: dataChart[2],
         borderColor: 'red',
         backgroundColor: 'rgba(255, 0, 0, 0.1)',
         fill: false,
       },
       {
         label: 'Y',
-        data: dataChart,
+        data: dataChart[3],
         borderColor: 'green',
         backgroundColor: 'rgba(0, 255, 0, 0.1)',
         fill: false,
       },
       {
         label: 'Z',
-        data: dataChart,
+        data: dataChart[3],
         borderColor: 'blue',
         backgroundColor: 'rgba(0, 0, 255, 0.1)',
         fill: false,
