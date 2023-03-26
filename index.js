@@ -193,11 +193,11 @@ var chart = new Chart(canvas, {
   },
 });
 
-dataChart[2] = chart.data.datasets[0].data;
-dataChart[3] = chart.data.datasets[1].data;
-dataChart[4] = chart.data.datasets[2].data;
-var i = 0;
-chart.update();
+// dataChart[2] = chart.data.datasets[0].data;
+// dataChart[3] = chart.data.datasets[1].data;
+// dataChart[4] = chart.data.datasets[2].data;
+// var i = 0;
+// chart.update();
 
 
 
