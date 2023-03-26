@@ -39,31 +39,32 @@ async function onStartButtonClick() {
 
     log('Getting Characteristic...');
     // add new
-    let characteristicTargets = [battery_Characteristic, accelerometer_Characteristic, magnetometer_Characteristic, gyroscope_Characteristic]
-    for (const [index, characteristicTarget] of characteristicTargets.entries()) {
+    let UuidTargets = [batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid]
+    for (const [index, UuidTarget] of UuidTargets.entries()) {
+      let characteristicTarget = await service.getCharacteristic(UuidTarget);
       characteristicTarget.addEventListener("characteristicvaluechanged", callback)
       await characteristicTarget.startNotifications();
     }
 
     // battery_Characteristic = await service.getCharacteristic(batteryUuid);
     // await battery_Characteristic.startNotifications();
-    battery_Characteristic.addEventListener('characteristicvaluechanged',
-      battery_func);
+    // battery_Characteristic.addEventListener('characteristicvaluechanged',
+    //   battery_func);
 
     // accelerometer_Characteristic = await service.getCharacteristic(accelerometerUuid);
     // await accelerometer_Characteristic.startNotifications();
-    accelerometer_Characteristic.addEventListener('characteristicvaluechanged',
-      accelerometer_func);
+    // accelerometer_Characteristic.addEventListener('characteristicvaluechanged',
+    //   accelerometer_func);
 
     // magnetometer_Characteristic = await service.getCharacteristic(magnetometerUuid);
     // await magnetometer_Characteristic.startNotifications();
-    magnetometer_Characteristic.addEventListener('characteristicvaluechanged',
-      magnetometer_func);
+    // magnetometer_Characteristic.addEventListener('characteristicvaluechanged',
+    //   magnetometer_func);
 
     // gyroscope_Characteristic = await service.getCharacteristic(gyroscopeUuid);
     // await gyroscope_Characteristic.startNotifications();
-    gyroscope_Characteristic.addEventListener('characteristicvaluechanged',
-      gyroscope_func);
+    // gyroscope_Characteristic.addEventListener('characteristicvaluechanged',
+    //   gyroscope_func);
 
     // accelerometer_event_Characteristic = await service.getCharacteristic(accelerometer_eventUuid);
     // await accelerometer_event_Characteristic.startNotifications();
