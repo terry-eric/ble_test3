@@ -20,7 +20,7 @@ function gyroscope_func(event) {
   let output = ["gyroscope", Timestamp, x, y, z]
   //   log(JSON.stringify(bytes))
   gyroscopeData.push(output);
-
+  return output;
   // return {
   //   Timestamp: Timestamp,
   //   x: x,
