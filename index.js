@@ -96,7 +96,7 @@ function callback(event) {
       document.getElementById("gyroX").innerHTML = x / 10;
       document.getElementById("gyroY").innerHTML = y / 10;
       document.getElementById("gyroZ").innerHTML = z / 10;
-      gyroscopeData = ["gyroscope", Timestamp, x, y, z]
+      gyroscopeData.push(["gyroscope", Timestamp, x, y, z])
     }
   }
 }
