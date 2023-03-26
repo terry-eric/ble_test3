@@ -1,7 +1,7 @@
 var battery_Characteristic, accelerometer_Characteristic, magnetometer_Characteristic, gyroscope_Characteristic, temperature_Characteristic;
 const batteryData = [], accelerometerData = [], gyroscopeData = [], magnetometerData = [];
-// 引入Chart.js庫
-import Chart from 'chart.js';
+// // 引入Chart.js庫
+// import Chart from 'chart.js';
 
 let startBtn = document.querySelector('#start');
 let stopBtn = document.querySelector('#stop');
@@ -114,7 +114,7 @@ async function onStopButtonClick() {
         callback);
     }
     await server.disconnect(); // 需要手動斷開 GATT 伺服器的連線
-    
+
     log('> Notifications stopped');
     const sensordata = [batteryData, accelerometerData, gyroscopeData, magnetometerData];
     const csv = sensordata.map(row => row.join(',')).join('\n');
