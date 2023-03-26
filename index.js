@@ -68,25 +68,12 @@ function callback(event) {
 async function onStopButtonClick() {
 
   try {
-    await battery_Characteristic.stopNotifications();
-    battery_Characteristic.removeEventListener('characteristicvaluechanged',
-      battery_func);
-
-    await accelerometer_Characteristic.stopNotifications();
-    accelerometer_Characteristic.removeEventListener('characteristicvaluechanged',
-      accelerometer_func);
-
-    await magnetometer_Characteristic.stopNotifications();
-    magnetometer_Characteristic.removeEventListener('characteristicvaluechanged',
-      magnetometer_func);
-
-    await gyroscope_Characteristic.stopNotifications();
-    gyroscope_Characteristic.removeEventListener('characteristicvaluechanged',
-      gyroscope_func);
-
-    await temperature_Characteristic.stopNotifications();
-    temperature_Characteristic.removeEventListener('characteristicvaluechanged',
-      temperature_func);
+    // 停止所有 characteristic 的通知功能
+    for (const [index, UuidTarget] of UuidTargets.entries()) {
+      await characteristicTarget.stopNotifications();
+      characteristicTarget.removeEventListener('characteristicvaluechanged',
+        callback);
+    }
 
     log('> Notifications stopped');
 
