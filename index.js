@@ -136,6 +136,7 @@ function bytes4int32(one, two, three, four) {
 
 
 
+var dataChart =  accelerometerData;
 var canvas = document.getElementById('myChart');
 
 var chart = new Chart(canvas, {
@@ -144,21 +145,21 @@ var chart = new Chart(canvas, {
     datasets: [
       {
         label: 'X',
-        data: [],
+        data: dataChart,
         borderColor: 'red',
         backgroundColor: 'rgba(255, 0, 0, 0.1)',
         fill: false,
       },
       {
         label: 'Y',
-        data: [],
+        data: dataChart,
         borderColor: 'green',
         backgroundColor: 'rgba(0, 255, 0, 0.1)',
         fill: false,
       },
       {
         label: 'Z',
-        data: [],
+        data: dataChart,
         borderColor: 'blue',
         backgroundColor: 'rgba(0, 0, 255, 0.1)',
         fill: false,
@@ -191,7 +192,7 @@ var chart = new Chart(canvas, {
     showLines: true,
   },
 });
-var dataChart =  accelerometerData;
+
 dataChart[2] = chart.data.datasets[0].data;
 dataChart[3] = chart.data.datasets[1].data;
 dataChart[4] = chart.data.datasets[2].data;
