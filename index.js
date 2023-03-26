@@ -137,32 +137,40 @@ function bytes4int32(one, two, three, four) {
 
 var canvas = document.getElementById('myChart');
 var select = document.getElementById('dataChart');
-var dataChart = accelerometerData;
 
 // 當選取選單時
 select.addEventListener('change', (event) => {
   const chartType = event.target.value;
+  if (chartType = "accelerometerChart") {
+    var dataChart = accelerometerData;
+  }
+  if (chartType = "gyroscopeChart") {
+    var dataChart = gyroscopeData;
+  }
+  if (chartType = "magnetometerChart") {
+    var dataChart = magnetometerData;
+  }
   var chart = new Chart(canvas, {
     type: 'line',
     data: {
       datasets: [
         {
           label: 'X',
-          data: dataChart[1],
+          data: dataChart[2],
           borderColor: 'red',
           backgroundColor: 'rgba(255, 0, 0, 0.1)',
           fill: false,
         },
         {
           label: 'Y',
-          data: dataChart[2],
+          data: dataChart[3],
           borderColor: 'green',
           backgroundColor: 'rgba(0, 255, 0, 0.1)',
           fill: false,
         },
         {
           label: 'Z',
-          data: dataChart[3],
+          data: dataChart[4],
           borderColor: 'blue',
           backgroundColor: 'rgba(0, 0, 255, 0.1)',
           fill: false,
