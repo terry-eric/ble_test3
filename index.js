@@ -65,7 +65,7 @@ function callback(event) {
   console.log(event.currentTarget)
   console.log(event.currentTarget.uuid)
   if (event.currentTarget.uuid === (accelerometerUuid || magnetometerUuid || gyroscopeUuid)){
-    let value = event.target.value;
+    let value = event.currentTarget.value;
     let a = [];
     for (let i = 0; i < value.byteLength; i++) {
       a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
