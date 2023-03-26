@@ -27,7 +27,7 @@ async function onStartButtonClick() {
     log('Requesting Bluetooth Device...');
     const device = await navigator.bluetooth.requestDevice({
       // add newDD
-      optionalServices: [serviceUuid, batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid, temperatureUuid],
+      optionalServices: [serviceUuid, batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid],
       acceptAllDevices: true
     });
 
@@ -94,9 +94,9 @@ async function onStopButtonClick() {
     gyroscope_Characteristic.removeEventListener('characteristicvaluechanged',
       gyroscope_func);
 
-    await temperature_Characteristic.stopNotifications();
-    temperature_Characteristic.removeEventListener('characteristicvaluechanged',
-      temperature_func);
+    // await temperature_Characteristic.stopNotifications();
+    // temperature_Characteristic.removeEventListener('characteristicvaluechanged',
+    //   temperature_func);
 
     log('> Notifications stopped');
 
