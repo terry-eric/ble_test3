@@ -1,6 +1,7 @@
 var battery_Characteristic, accelerometer_Characteristic, magnetometer_Characteristic, gyroscope_Characteristic, temperature_Characteristic;
 const batteryData = [], accelerometerData = [], gyroscopeData = [], magnetometerData = [];
-
+// 引入Chart.js庫
+import Chart from 'chart.js';
 
 let startBtn = document.querySelector('#start');
 let stopBtn = document.querySelector('#stop');
@@ -21,13 +22,14 @@ let magnetometerUuid = "00200000-0001-11e1-ac36-0002a5d5c51b";
 let gyroscopeUuid = "00400000-0001-11e1-ac36-0002a5d5c51b";
 let temperatureUuid = "00040000-0001-11e1-ac36-0002a5d5c51b";
 let pressureUuid = "00100000-0001-11e1-ac36-0002a5d5c51b";
+// 宣告一個包含四個 UUID 的陣列
+let UuidTargets = [batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid];
+const server
 
 async function onStartButtonClick() {
 
   try {
     log('Requesting Bluetooth Device...');
-    // 宣告一個包含四個 UUID 的陣列
-    let UuidTargets = [batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid];
     const device = await navigator.bluetooth.requestDevice({
       // add newDD
       optionalServices: [serviceUuid, batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid],
@@ -35,7 +37,7 @@ async function onStartButtonClick() {
     });
 
     log('Connecting to GATT Server...');
-    const server = await device.gatt.connect();
+    server = await device.gatt.connect();
 
     log('Getting Service...');
     const service = await server.getPrimaryService(serviceUuid);
@@ -80,6 +82,7 @@ function callback(event) {
     let x = bytes2int16([bytes[2], bytes[3]])
     let y = bytes2int16([bytes[4], bytes[5]])
     let z = bytes2int16([bytes[6], bytes[7]])
+
     if (event.currentTarget.uuid === accelerometerUuid) {
       document.getElementById("accX").innerHTML = x;
       document.getElementById("accY").innerHTML = y;
@@ -90,13 +93,13 @@ function callback(event) {
       document.getElementById("magnX").innerHTML = x;
       document.getElementById("magnY").innerHTML = y;
       document.getElementById("magnZ").innerHTML = z;
-      magnetometerData.push(["accelerometer", Timestamp, x, y, z])
+      magnetometerData.push(["magnetometer", Timestamp, x, y, z])
     }
     if (event.currentTarget.uuid === gyroscopeUuid) {
       document.getElementById("gyroX").innerHTML = x / 10;
       document.getElementById("gyroY").innerHTML = y / 10;
       document.getElementById("gyroZ").innerHTML = z / 10;
-      gyroscopeData.push(["gyroscope", Timestamp, x, y, z])
+      gyroscopeData.push(["gyroscope", Timestamp, x/10, y/10, z/10])
     }
   }
 }
@@ -105,11 +108,13 @@ async function onStopButtonClick() {
   try {
     // 停止所有 characteristic 的通知功能
     for (const [index, UuidTarget] of UuidTargets.entries()) {
+      const characteristicTarget = await server.getCharacteristic(UuidTarget);
       await characteristicTarget.stopNotifications();
       characteristicTarget.removeEventListener('characteristicvaluechanged',
         callback);
     }
-
+    await server.disconnect(); // 需要手動斷開 GATT 伺服器的連線
+    
     log('> Notifications stopped');
     const sensordata = [batteryData, accelerometerData, gyroscopeData, magnetometerData];
     const csv = sensordata.map(row => row.join(',')).join('\n');
@@ -147,7 +152,7 @@ function bytes4int32(one, two, three, four) {
 
 
 
-var canvas = document.getElementById('myChart');
+var ctx = document.getElementById('myChart').getContext('2d');;
 var select = document.getElementById('dataChart');
 
 // 當選取選單時
@@ -162,7 +167,7 @@ select.addEventListener('change', (event) => {
   if (chartType === "magnetometerChart") {
     var dataChart = magnetometerData;
   }
-  var chart = new Chart(canvas, {
+  var chart = new Chart(ctx, {
     type: 'line',
     data: {
       datasets: [
