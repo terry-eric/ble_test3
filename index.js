@@ -64,10 +64,10 @@ async function onStartButtonClick() {
     // accelerometer_event_Characteristic.addEventListener('characteristicvaluechanged',
     // accelerometer_event_func);
 
-    temperature_Characteristic = await service.getCharacteristic(temperatureUuid);
-    await temperature_Characteristic.startNotifications();
-    temperature_Characteristic.addEventListener('characteristicvaluechanged',
-      temperature_func);
+    // temperature_Characteristic = await service.getCharacteristic(temperatureUuid);
+    // await temperature_Characteristic.startNotifications();
+    // temperature_Characteristic.addEventListener('characteristicvaluechanged',
+    //   temperature_func);
 
     log('> Notifications started');
   } catch (error) {
