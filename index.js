@@ -24,7 +24,7 @@ let temperatureUuid = "00040000-0001-11e1-ac36-0002a5d5c51b";
 let pressureUuid = "00100000-0001-11e1-ac36-0002a5d5c51b";
 // 宣告一個包含四個 UUID 的陣列
 let UuidTargets = [batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid];
-const server
+let server
 
 async function onStartButtonClick() {
 
