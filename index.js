@@ -4,8 +4,6 @@ const sensordata = [batteryData, accelerometerData, gyroscopeData, magnetometerD
 
 let startBtn = document.querySelector('#start');
 let stopBtn = document.querySelector('#stop');
-// 取得 canvas 元素
-const dataChart = document.querySelector('#dataChart');
 
 startBtn.addEventListener("click", onStartButtonClick);
 stopBtn.addEventListener("click", onStopButtonClick);
@@ -137,7 +135,7 @@ function bytes4int32(one, two, three, four) {
 
 
 
-var canvas = document.getElementById('myChart');
+var canvas = document.getElementById('dataChart');
 var select = document.getElementById('dataSelect');
 var dataChart = accelerometerData;
 
