@@ -25,9 +25,11 @@ async function onStartButtonClick() {
 
   try {
     log('Requesting Bluetooth Device...');
+    // 宣告一個包含四個 UUID 的陣列
+    let UuidTargets = [batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid];
     const device = await navigator.bluetooth.requestDevice({
       // add newDD
-      optionalServices: [serviceUuid, batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid, temperatureUuid],
+      optionalServices: UuidTargets,
       acceptAllDevices: true
     });
 
@@ -39,8 +41,6 @@ async function onStartButtonClick() {
 
     log('Getting Characteristic...');
     // add new
-    // 宣告一個包含四個 UUID 的陣列
-    let UuidTargets = [batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid];
 
     // 使用 for...of 迴圈遍歷陣列中的元素，取得每個 UUID 對應的 characteristic 並啟用通知
     for (const [index, UuidTarget] of UuidTargets.entries()) {
@@ -54,37 +54,6 @@ async function onStartButtonClick() {
       // 啟用 characteristic 的通知功能，這樣當 characteristic 的值改變時，就會發送通知
       await characteristicTarget.startNotifications();
     }
-
-
-    // battery_Characteristic = await service.getCharacteristic(batteryUuid);
-    // await battery_Characteristic.startNotifications();
-    // battery_Characteristic.addEventListener('characteristicvaluechanged',
-    //   battery_func);
-
-    // accelerometer_Characteristic = await service.getCharacteristic(accelerometerUuid);
-    // await accelerometer_Characteristic.startNotifications();
-    // accelerometer_Characteristic.addEventListener('characteristicvaluechanged',
-    //   accelerometer_func);
-
-    // magnetometer_Characteristic = await service.getCharacteristic(magnetometerUuid);
-    // await magnetometer_Characteristic.startNotifications();
-    // magnetometer_Characteristic.addEventListener('characteristicvaluechanged',
-    //   magnetometer_func);
-
-    // gyroscope_Characteristic = await service.getCharacteristic(gyroscopeUuid);
-    // await gyroscope_Characteristic.startNotifications();
-    // gyroscope_Characteristic.addEventListener('characteristicvaluechanged',
-    //   gyroscope_func);
-
-    // accelerometer_event_Characteristic = await service.getCharacteristic(accelerometer_eventUuid);
-    // await accelerometer_event_Characteristic.startNotifications();
-    // accelerometer_event_Characteristic.addEventListener('characteristicvaluechanged',
-    // accelerometer_event_func);
-
-    // temperature_Characteristic = await service.getCharacteristic(temperatureUuid);
-    // await temperature_Characteristic.startNotifications();
-    // temperature_Characteristic.addEventListener('characteristicvaluechanged',
-    //   temperature_func);
 
     log('> Notifications started');
   } catch (error) {
