@@ -27,7 +27,7 @@ async function onStartButtonClick() {
     log('Requesting Bluetooth Device...');
     const device = await navigator.bluetooth.requestDevice({
       // add newDD
-      optionalServices: [serviceUuid, batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid],
+      optionalServices: [serviceUuid, batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid, temperatureUuid],
       acceptAllDevices: true
     });
 
@@ -42,32 +42,32 @@ async function onStartButtonClick() {
     battery_Characteristic = await service.getCharacteristic(batteryUuid);
     await battery_Characteristic.startNotifications();
     battery_Characteristic.addEventListener('characteristicvaluechanged',
-      function (event) { batteryData = battery_func });
+      battery_func);
 
     accelerometer_Characteristic = await service.getCharacteristic(accelerometerUuid);
     await accelerometer_Characteristic.startNotifications();
     accelerometer_Characteristic.addEventListener('characteristicvaluechanged',
-      function (event) { accelerometerData = accelerometer_func });
+      accelerometer_func);
 
     magnetometer_Characteristic = await service.getCharacteristic(magnetometerUuid);
     await magnetometer_Characteristic.startNotifications();
     magnetometer_Characteristic.addEventListener('characteristicvaluechanged',
-      function (event) { magnetometerData = magnetometer_func });
+      magnetometer_func);
 
     gyroscope_Characteristic = await service.getCharacteristic(gyroscopeUuid);
     await gyroscope_Characteristic.startNotifications();
     gyroscope_Characteristic.addEventListener('characteristicvaluechanged',
-      function (event) { gyroscopeData = gyroscope_func });
+      gyroscope_func);
 
     // accelerometer_event_Characteristic = await service.getCharacteristic(accelerometer_eventUuid);
     // await accelerometer_event_Characteristic.startNotifications();
     // accelerometer_event_Characteristic.addEventListener('characteristicvaluechanged',
     // accelerometer_event_func);
 
-    // temperature_Characteristic = await service.getCharacteristic(temperatureUuid);
-    // await temperature_Characteristic.startNotifications();
-    // temperature_Characteristic.addEventListener('characteristicvaluechanged',
-    //   temperature_func);
+    temperature_Characteristic = await service.getCharacteristic(temperatureUuid);
+    await temperature_Characteristic.startNotifications();
+    temperature_Characteristic.addEventListener('characteristicvaluechanged',
+      temperature_func);
 
     log('> Notifications started');
   } catch (error) {
@@ -94,9 +94,9 @@ async function onStopButtonClick() {
     gyroscope_Characteristic.removeEventListener('characteristicvaluechanged',
       gyroscope_func);
 
-    // await temperature_Characteristic.stopNotifications();
-    // temperature_Characteristic.removeEventListener('characteristicvaluechanged',
-    //   temperature_func);
+    await temperature_Characteristic.stopNotifications();
+    temperature_Characteristic.removeEventListener('characteristicvaluechanged',
+      temperature_func);
 
     log('> Notifications stopped');
 
