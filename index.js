@@ -139,25 +139,25 @@ function bytes4int32(one, two, three, four) {
 var canvas = document.getElementById('myChart');
 
 var chart = new Chart(canvas, {
-  type: 'scatter',
+  type: 'line',
   data: {
     datasets: [
       {
-        label: '數據1',
+        label: 'X',
         data: [],
         borderColor: 'red',
         backgroundColor: 'rgba(255, 0, 0, 0.1)',
         yAxisID: 'y-axis-1',
       },
       {
-        label: '數據2',
+        label: 'Y',
         data: [],
         borderColor: 'green',
         backgroundColor: 'rgba(0, 255, 0, 0.1)',
         yAxisID: 'y-axis-2',
       },
       {
-        label: '數據3',
+        label: 'Z',
         data: [],
         borderColor: 'blue',
         backgroundColor: 'rgba(0, 0, 255, 0.1)',
