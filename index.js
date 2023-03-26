@@ -64,34 +64,37 @@ async function onStartButtonClick() {
 function callback(event) {
   console.log(event.currentTarget)
   console.log(event.currentTarget.uuid)
-  if (event.currentTarget.uuid === (accelerometerUuid || magnetometerUuid || gyroscopeUuid)){
+  if (event.currentTarget.uuid === accelerometerUuid ||
+    event.currentTarget.uuid === magnetometerUuid ||
+    event.currentTarget.uuid === gyroscopeUuid) {
+      
     let value = event.currentTarget.value;
     let a = [];
     for (let i = 0; i < value.byteLength; i++) {
       a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
     }
     let bytes = a;
-  
+
     let Timestamp = bytes2int16([bytes[0], bytes[1]])
     let x = bytes2int16([bytes[2], bytes[3]])
     let y = bytes2int16([bytes[4], bytes[5]])
     let z = bytes2int16([bytes[6], bytes[7]])
-    if (event.currentTarget.uuid === accelerometerUuid){
+    if (event.currentTarget.uuid === accelerometerUuid) {
       document.getElementById("accX").innerHTML = x;
       document.getElementById("accY").innerHTML = y;
       document.getElementById("accZ").innerHTML = z;
       accelerometerData.push(["accelerometer", Timestamp, x, y, z])
     }
-    if (event.currentTarget.uuid === magnetometerUuid){
+    if (event.currentTarget.uuid === magnetometerUuid) {
       document.getElementById("magnX").innerHTML = x;
       document.getElementById("magnY").innerHTML = y;
       document.getElementById("magnZ").innerHTML = z;
       magnetometerData.push(["accelerometer", Timestamp, x, y, z])
     }
-    if (event.currentTarget.uuid === gyroscopeUuid){
-      document.getElementById("gyroX").innerHTML = x/10;
-      document.getElementById("gyroY").innerHTML = y/10;
-      document.getElementById("gyroZ").innerHTML = z/10;
+    if (event.currentTarget.uuid === gyroscopeUuid) {
+      document.getElementById("gyroX").innerHTML = x / 10;
+      document.getElementById("gyroY").innerHTML = y / 10;
+      document.getElementById("gyroZ").innerHTML = z / 10;
       gyroscopeData = ["gyroscope", Timestamp, x, y, z]
     }
   }
