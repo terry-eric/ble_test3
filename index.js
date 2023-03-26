@@ -39,9 +39,9 @@ async function onStartButtonClick() {
 
     log('Getting Characteristic...');
     // add new
-    let characteristicTarget = [battery_Characteristic, accelerometer_Characteristic, magnetometer_Characteristic, gyroscope_Characteristic]
-    for (const [index, characteristicTarget] of characteristicTarget.entries()) {
-      characteristicTarget.addEventListener("click", callback)
+    let characteristicTargets = [battery_Characteristic, accelerometer_Characteristic, magnetometer_Characteristic, gyroscope_Characteristic]
+    for (const [index, characteristicTarget] of characteristicTargets.entries()) {
+      characteristicTarget.addEventListener("characteristicvaluechanged", callback)
       await characteristicTarget.startNotifications();
     }
 
