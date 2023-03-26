@@ -39,12 +39,22 @@ async function onStartButtonClick() {
 
     log('Getting Characteristic...');
     // add new
-    let UuidTargets = [batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid]
+    // 宣告一個包含四個 UUID 的陣列
+    let UuidTargets = [batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid];
+
+    // 使用 for...of 迴圈遍歷陣列中的元素，取得每個 UUID 對應的 characteristic 並啟用通知
     for (const [index, UuidTarget] of UuidTargets.entries()) {
+
+      // 使用 service.getCharacteristic() 方法來取得指定 UUID 對應的 characteristic
       let characteristicTarget = await service.getCharacteristic(UuidTarget);
-      characteristicTarget.addEventListener("characteristicvaluechanged", callback)
+
+      // 當 characteristic 的值發生改變時，執行 callback 函數
+      characteristicTarget.addEventListener("characteristicvaluechanged", callback);
+
+      // 啟用 characteristic 的通知功能，這樣當 characteristic 的值改變時，就會發送通知
       await characteristicTarget.startNotifications();
     }
+
 
     // battery_Characteristic = await service.getCharacteristic(batteryUuid);
     // await battery_Characteristic.startNotifications();
@@ -71,10 +81,10 @@ async function onStartButtonClick() {
     // accelerometer_event_Characteristic.addEventListener('characteristicvaluechanged',
     // accelerometer_event_func);
 
-    temperature_Characteristic = await service.getCharacteristic(temperatureUuid);
-    await temperature_Characteristic.startNotifications();
-    temperature_Characteristic.addEventListener('characteristicvaluechanged',
-      temperature_func);
+    // temperature_Characteristic = await service.getCharacteristic(temperatureUuid);
+    // await temperature_Characteristic.startNotifications();
+    // temperature_Characteristic.addEventListener('characteristicvaluechanged',
+    //   temperature_func);
 
     log('> Notifications started');
   } catch (error) {
@@ -83,7 +93,8 @@ async function onStartButtonClick() {
 }
 
 function callback(event) {
-  console.log(event.currentTarget.id)
+  console.log(event.currentTarget)
+  console.log(event.currentTarget.uuid)
 }
 async function onStopButtonClick() {
 
