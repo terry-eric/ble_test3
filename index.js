@@ -29,7 +29,7 @@ async function onStartButtonClick() {
     let UuidTargets = [batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid];
     const device = await navigator.bluetooth.requestDevice({
       // add newDD
-      optionalServices: [batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid],
+      optionalServices: [serviceUuid, batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid],
       acceptAllDevices: true
     });
 
