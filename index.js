@@ -42,22 +42,22 @@ async function onStartButtonClick() {
     battery_Characteristic = await service.getCharacteristic(batteryUuid);
     await battery_Characteristic.startNotifications();
     battery_Characteristic.addEventListener('characteristicvaluechanged',
-      battery_func);
+      function (event) { batteryData = battery_func });
 
     accelerometer_Characteristic = await service.getCharacteristic(accelerometerUuid);
     await accelerometer_Characteristic.startNotifications();
     accelerometer_Characteristic.addEventListener('characteristicvaluechanged',
-      accelerometer_func);
+      function (event) { accelerometerData = accelerometer_func });
 
     magnetometer_Characteristic = await service.getCharacteristic(magnetometerUuid);
     await magnetometer_Characteristic.startNotifications();
     magnetometer_Characteristic.addEventListener('characteristicvaluechanged',
-      magnetometer_func);
+      function (event) { magnetometerData = magnetometer_func });
 
     gyroscope_Characteristic = await service.getCharacteristic(gyroscopeUuid);
     await gyroscope_Characteristic.startNotifications();
     gyroscope_Characteristic.addEventListener('characteristicvaluechanged',
-      gyroscope_func);
+      function (event) { gyroscopeData = gyroscope_func });
 
     // accelerometer_event_Characteristic = await service.getCharacteristic(accelerometer_eventUuid);
     // await accelerometer_event_Characteristic.startNotifications();
