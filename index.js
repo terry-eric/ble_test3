@@ -220,7 +220,7 @@ select.addEventListener('change', (event) => {
       showLines: true,
     },
   });
-});
+},1000);
 
 
 
