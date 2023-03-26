@@ -1,4 +1,4 @@
-const batteryData = [];
+batteryData = [];
 // 00020000-0001-11e1-ac36-0002a5d5c51b
 function battery_func(event) {
 
