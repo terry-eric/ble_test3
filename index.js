@@ -141,13 +141,13 @@ var select = document.getElementById('dataChart');
 // 當選取選單時
 select.addEventListener('change', (event) => {
   const chartType = event.target.value;
-  if (chartType = "accelerometerChart") {
+  if (chartType === "accelerometerChart") {
     var dataChart = accelerometerData;
   }
-  if (chartType = "gyroscopeChart") {
+  if (chartType === "gyroscopeChart") {
     var dataChart = gyroscopeData;
   }
-  if (chartType = "magnetometerChart") {
+  if (chartType === "magnetometerChart") {
     var dataChart = magnetometerData;
   }
   var chart = new Chart(canvas, {
