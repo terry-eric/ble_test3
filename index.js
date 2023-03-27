@@ -152,21 +152,27 @@ function bytes4int32(one, two, three, four) {
 
 
 
-var ctx = document.getElementById('myChart').getContext('2d');;
+var ctx = document.getElementById('myChart').getContext('2d');
 var select = document.getElementById('dataChart');
 
-// 當選取選單時
+var chartType = "";
+var dataChart = [];
+
+// 當選取選單時，設定要顯示的圖表類型
 select.addEventListener('change', (event) => {
-  const chartType = event.target.value;
+  chartType = event.target.value;
+});
+
+// 設定定時器，每隔1秒更新一次圖表
+setInterval(() => {
   if (chartType === "accelerometerChart") {
-    var dataChart = accelerometerData;
+    dataChart = accelerometerData;
+  } else if (chartType === "gyroscopeChart") {
+    dataChart = gyroscopeData;
+  } else if (chartType === "magnetometerChart") {
+    dataChart = magnetometerData;
   }
-  if (chartType === "gyroscopeChart") {
-    var dataChart = gyroscopeData;
-  }
-  if (chartType === "magnetometerChart") {
-    var dataChart = magnetometerData;
-  }
+
   var chart = new Chart(ctx, {
     type: 'line',
     data: {
@@ -220,7 +226,8 @@ select.addEventListener('change', (event) => {
       showLines: true,
     },
   });
-},1000);
+}, 1000);
+
 
 
 
