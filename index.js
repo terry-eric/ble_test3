@@ -101,9 +101,9 @@ function callback(event) {
       document.getElementById("gyroZ").innerHTML = z;
       gyroscopeData.push(["gyroscope", Timestamp, x, y, z])
     }
-    xData = x;
-    yData = y;
-    zData = z;
+    xData.push(x);
+    yData.push(y);
+    zData.push(z);
   }
 }
 async function onStopButtonClick() {
