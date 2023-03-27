@@ -167,7 +167,7 @@ select.addEventListener('change', (event) => {
 // 設定定時器，每隔1秒更新一次圖表
 setInterval(() => {
   // 如果已经存在图表实例，则销毁它
-  if (chart) {
+  if (chart !== null) {
     chart.destroy();
   }
   if (chartType === "accelerometerChart") {
