@@ -221,7 +221,7 @@ setInterval(() => {
       },
       scales: {
         xAxes: [{
-          type: 'time',
+          type: 'linear',
           time: {
             unit: 'second',
             displayFormats: {
