@@ -85,7 +85,8 @@ function callback(event) {
       document.getElementById("accX").innerHTML = x;
       document.getElementById("accY").innerHTML = y;
       document.getElementById("accZ").innerHTML = z;
-      accelerometerData.push(["accelerometer", Timestamp, x, y, z])
+      accelerometerData.push(["accelerometer", Timestamp, x, y, z]);
+      console.log(accelerometerData)
     }
     if (event.currentTarget.uuid === magnetometerUuid) {
       document.getElementById("magnX").innerHTML = x;
