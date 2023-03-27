@@ -157,6 +157,7 @@ var select = document.getElementById('dataChart');
 
 var chartType = "";
 var dataChart = [];
+let chart = null;
 
 // 當選取選單時，設定要顯示的圖表類型
 select.addEventListener('change', (event) => {
@@ -172,6 +173,9 @@ setInterval(() => {
   } else if (chartType === "magnetometerChart") {
     dataChart = magnetometerData;
   }
+  if (chart) {
+    chart.destroy();
+  } 
 
   var chart = new Chart(ctx, {
     type: 'line',
