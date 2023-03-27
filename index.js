@@ -1,6 +1,6 @@
 var battery_Characteristic, accelerometer_Characteristic, magnetometer_Characteristic, gyroscope_Characteristic, temperature_Characteristic;
 const batteryData = [], accelerometerData = [], gyroscopeData = [], magnetometerData = [];
-
+let xData = [], yData = [], zData = [] 
 let startBtn = document.querySelector('#start');
 let stopBtn = document.querySelector('#stop');
 
@@ -95,11 +95,15 @@ function callback(event) {
       magnetometerData.push(["magnetometer", Timestamp, x, y, z])
     }
     if (event.currentTarget.uuid === gyroscopeUuid) {
-      document.getElementById("gyroX").innerHTML = x / 10;
-      document.getElementById("gyroY").innerHTML = y / 10;
-      document.getElementById("gyroZ").innerHTML = z / 10;
-      gyroscopeData.push(["gyroscope", Timestamp, x / 10, y / 10, z / 10])
+      x = x/10; y = y/10; z = z/10;
+      document.getElementById("gyroX").innerHTML = x;
+      document.getElementById("gyroY").innerHTML = y;
+      document.getElementById("gyroZ").innerHTML = z;
+      gyroscopeData.push(["gyroscope", Timestamp, x, y, z])
     }
+    xData = x;
+    yData = y;
+    zData = z;
   }
 }
 async function onStopButtonClick() {
@@ -169,13 +173,13 @@ setInterval(() => {
   if (chart !== null) {
     chart.destroy();
   }
-  if (chartType === "accelerometerChart") {
-    dataChart = accelerometerData;
-  } else if (chartType === "gyroscopeChart") {
-    dataChart = gyroscopeData;
-  } else if (chartType === "magnetometerChart") {
-    dataChart = magnetometerData;
-  }
+  // if (chartType === "accelerometerChart") {
+  //   dataChart = accelerometerData;
+  // } else if (chartType === "gyroscopeChart") {
+  //   dataChart = gyroscopeData;
+  // } else if (chartType === "magnetometerChart") {
+  //   dataChart = magnetometerData;
+  // }
 
   chart = new Chart(ctx, {
     type: 'line',
@@ -183,21 +187,21 @@ setInterval(() => {
       datasets: [
         {
           label: 'X',
-          data: dataChart[2],
+          data: xData,
           borderColor: 'red',
           backgroundColor: 'rgba(255, 0, 0, 0.1)',
           fill: false,
         },
         {
           label: 'Y',
-          data: dataChart[3],
+          data: yData,
           borderColor: 'green',
           backgroundColor: 'rgba(0, 255, 0, 0.1)',
           fill: false,
         },
         {
           label: 'Z',
-          data: dataChart[4],
+          data: zData,
           borderColor: 'blue',
           backgroundColor: 'rgba(0, 0, 255, 0.1)',
           fill: false,
