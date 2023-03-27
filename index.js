@@ -180,7 +180,7 @@ setInterval(() => {
   // } else if (chartType === "magnetometerChart") {
   //   dataChart = magnetometerData;
   // }
-
+  console.log(xData);console.log(yData);console.log(zData);
   chart = new Chart(ctx, {
     type: 'line',
     data: {
