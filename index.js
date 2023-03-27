@@ -164,71 +164,74 @@ select.addEventListener('change', (event) => {
   chartType = event.target.value;
 });
 
-  // 設定定時器，每隔1秒更新一次圖表
-  setInterval(() => {
-    chart.destroy();
-    if (chartType === "accelerometerChart") {
-      dataChart = accelerometerData;
-    } else if (chartType === "gyroscopeChart") {
-      dataChart = gyroscopeData;
-    } else if (chartType === "magnetometerChart") {
-      dataChart = magnetometerData;
-    }
+// 設定定時器，每隔1秒更新一次圖表
+setInterval(() => {
+  // 如果已经存在图表实例，则销毁它
+  if (window.myChart) {
+    window.myChart.destroy();
+  }
+  if (chartType === "accelerometerChart") {
+    dataChart = accelerometerData;
+  } else if (chartType === "gyroscopeChart") {
+    dataChart = gyroscopeData;
+  } else if (chartType === "magnetometerChart") {
+    dataChart = magnetometerData;
+  }
 
-    var chart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        datasets: [
+  var chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      datasets: [
+        {
+          label: 'X',
+          data: dataChart[2],
+          borderColor: 'red',
+          backgroundColor: 'rgba(255, 0, 0, 0.1)',
+          fill: false,
+        },
+        {
+          label: 'Y',
+          data: dataChart[3],
+          borderColor: 'green',
+          backgroundColor: 'rgba(0, 255, 0, 0.1)',
+          fill: false,
+        },
+        {
+          label: 'Z',
+          data: dataChart[4],
+          borderColor: 'blue',
+          backgroundColor: 'rgba(0, 0, 255, 0.1)',
+          fill: false,
+        },
+      ],
+    },
+    options: {
+      animation: {
+        duration: 0, // 關閉動畫效果
+      },
+      scales: {
+        xAxes: [
           {
-            label: 'X',
-            data: dataChart[2],
-            borderColor: 'red',
-            backgroundColor: 'rgba(255, 0, 0, 0.1)',
-            fill: false,
+            type: 'time',
+            time: {
+              displayFormats: {
+                second: 'HH:mm:ss',
+              },
+            },
           },
+        ],
+        yAxes: [
           {
-            label: 'Y',
-            data: dataChart[3],
-            borderColor: 'green',
-            backgroundColor: 'rgba(0, 255, 0, 0.1)',
-            fill: false,
-          },
-          {
-            label: 'Z',
-            data: dataChart[4],
-            borderColor: 'blue',
-            backgroundColor: 'rgba(0, 0, 255, 0.1)',
-            fill: false,
+            ticks: {
+              beginAtZero: true,
+            },
           },
         ],
       },
-      options: {
-        animation: {
-          duration: 0, // 關閉動畫效果
-        },
-        scales: {
-          xAxes: [
-            {
-              type: 'time',
-              time: {
-                displayFormats: {
-                  second: 'HH:mm:ss',
-                },
-              },
-            },
-          ],
-          yAxes: [
-            {
-              ticks: {
-                beginAtZero: true,
-              },
-            },
-          ],
-        },
-        showLines: true,
-      },
-    });
-  }, 1000);
+      showLines: true,
+    },
+  });
+}, 1000);
 
 
 
