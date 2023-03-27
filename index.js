@@ -86,7 +86,6 @@ function callback(event) {
       document.getElementById("accY").innerHTML = y;
       document.getElementById("accZ").innerHTML = z;
       accelerometerData.push(["accelerometer", Timestamp, x, y, z]);
-      console.log(accelerometerData)
     }
     if (event.currentTarget.uuid === magnetometerUuid) {
       document.getElementById("magnX").innerHTML = x;
@@ -104,7 +103,15 @@ function callback(event) {
     xData.push(x);
     yData.push(y);
     zData.push(z);
-    console.log(xData);console.log(yData);console.log(zData);
+    if (xData.length > 3000) {
+      xData.shift();
+    }
+    if (yData.length > 3000) {
+      yData.shift();
+    }
+    if (xData.length > 3000) {
+      yData.shift();
+    }
   }
 }
 async function onStopButtonClick() {
