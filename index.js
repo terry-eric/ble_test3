@@ -104,6 +104,7 @@ function callback(event) {
     xData.push(x);
     yData.push(y);
     zData.push(z);
+    console.log(xData);console.log(yData);console.log(zData);
   }
 }
 async function onStopButtonClick() {
@@ -180,7 +181,6 @@ setInterval(() => {
   // } else if (chartType === "magnetometerChart") {
   //   dataChart = magnetometerData;
   // }
-  console.log(xData);console.log(yData);console.log(zData);
   chart = new Chart(ctx, {
     type: 'line',
     data: {
