@@ -1,7 +1,5 @@
 var battery_Characteristic, accelerometer_Characteristic, magnetometer_Characteristic, gyroscope_Characteristic, temperature_Characteristic;
 const batteryData = [], accelerometerData = [], gyroscopeData = [], magnetometerData = [];
-// // 引入Chart.js庫
-// import Chart from 'chart.js';
 
 let startBtn = document.querySelector('#start');
 let stopBtn = document.querySelector('#stop');
@@ -210,26 +208,27 @@ setInterval(() => {
         duration: 0, // 關閉動畫效果
       },
       scales: {
-        xAxes: [
-          {
-            type: 'time',
-            time: {
-              displayFormats: {
-                second: 'HH:mm:ss',
-              },
+        xAxes: [{
+          type: 'time',
+          time: {
+            unit: 'second',
+            displayFormats: {
+              second: 'HH:mm:ss',
             },
           },
-        ],
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true,
-            },
+          ticks: {
+            source: 'auto',
+            autoSkip: true,
           },
-        ],
+        }],
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+          },
+        }],
       },
       showLines: true,
-    },
+    },    
   });
 }, 1000);
 
