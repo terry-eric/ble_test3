@@ -178,7 +178,7 @@ setInterval(() => {
     dataChart = magnetometerData;
   }
 
-  var chart = new Chart(ctx, {
+  chart = new Chart(ctx, {
     type: 'line',
     data: {
       datasets: [
