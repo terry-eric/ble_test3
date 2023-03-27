@@ -190,7 +190,7 @@ setInterval(() => {
   // }
   chart = new Chart(ctx, {
     type: 'line',
-    labels: new Data(minutes),
+    labels: "O",
     data: {
       datasets: [
         {
