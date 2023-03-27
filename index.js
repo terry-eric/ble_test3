@@ -157,7 +157,7 @@ var select = document.getElementById('dataChart');
 
 var chartType = "";
 var dataChart = [];
-let chart = null;
+var chart = null;
 
 // 當選取選單時，設定要顯示的圖表類型
 select.addEventListener('change', (event) => {
