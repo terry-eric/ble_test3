@@ -1,8 +1,9 @@
 var battery_Characteristic, accelerometer_Characteristic, magnetometer_Characteristic, gyroscope_Characteristic, temperature_Characteristic;
 const batteryData = [], accelerometerData = [], gyroscopeData = [], magnetometerData = [];
-let xData = [], yData = [], zData = [] 
 let startBtn = document.querySelector('#start');
 let stopBtn = document.querySelector('#stop');
+let chartType = "accelerometerChart";
+let chartData = [];
 
 startBtn.addEventListener("click", onStartButtonClick);
 stopBtn.addEventListener("click", onStopButtonClick);
@@ -86,32 +87,24 @@ function callback(event) {
       document.getElementById("accY").innerHTML = y;
       document.getElementById("accZ").innerHTML = z;
       accelerometerData.push(["accelerometer", Timestamp, x, y, z]);
+      if(chartType === "accelerometerChart"){chartData.push([x,y,z])};
     }
     if (event.currentTarget.uuid === magnetometerUuid) {
       document.getElementById("magnX").innerHTML = x;
       document.getElementById("magnY").innerHTML = y;
       document.getElementById("magnZ").innerHTML = z;
       magnetometerData.push(["magnetometer", Timestamp, x, y, z])
+      if(chartType === "magnetometerChart"){chartData.push([x,y,z])};
     }
     if (event.currentTarget.uuid === gyroscopeUuid) {
       x = x/10; y = y/10; z = z/10;
       document.getElementById("gyroX").innerHTML = x;
       document.getElementById("gyroY").innerHTML = y;
       document.getElementById("gyroZ").innerHTML = z;
-      gyroscopeData.push(["gyroscope", Timestamp, x, y, z])
+      gyroscopeData.push(["gyroscope", Timestamp, x, y, z]);
+      if(chartType === "gyroscopeChart"){chartData.push([x,y,z])};
     }
-    xData.push(x);
-    yData.push(y);
-    zData.push(z);
-    if (xData.length > 3000) {
-      xData.shift();
-    }
-    if (yData.length > 3000) {
-      yData.shift();
-    }
-    if (xData.length > 3000) {
-      yData.shift();
-    }
+    
   }
 }
 async function onStopButtonClick() {
@@ -161,90 +154,85 @@ function bytes4int32(one, two, three, four) {
 
 
 
-
-
-var ctx = document.getElementById('myChart').getContext('2d');
-var select = document.getElementById('dataChart');
-
-var chartType = "";
-var dataChart = [];
-var chart = null;
-
 // 當選取選單時，設定要顯示的圖表類型
 select.addEventListener('change', (event) => {
   chartType = event.target.value;
 });
 
-// 設定定時器，每隔1秒更新一次圖表
-setInterval(() => {
-  // 如果已经存在图表实例，则销毁它
-  if (chart !== null) {
-    chart.destroy();
-  }
-  // if (chartType === "accelerometerChart") {
-  //   dataChart = accelerometerData;
-  // } else if (chartType === "gyroscopeChart") {
-  //   dataChart = gyroscopeData;
-  // } else if (chartType === "magnetometerChart") {
-  //   dataChart = magnetometerData;
-  // }
-  chart = new Chart(ctx, {
+
+
+
+
+
+
+var ctx = document.getElementById('myChart');
+var maxDataPoints = 1000; // 最多顯示1000筆資料
+const labels = [];
+for (let i = 0; i <= maxDataPoints; i++) {
+    labels.push(i.toString());
+}
+var myChart = new Chart(ctx, {
     type: 'line',
-    labels: "O",
     data: {
-      datasets: [
-        {
-          label: 'X',
-          data: xData,
-          borderColor: 'red',
-          backgroundColor: 'rgba(255, 0, 0, 0.1)',
-          fill: false,
-        },
-        {
-          label: 'Y',
-          data: yData,
-          borderColor: 'green',
-          backgroundColor: 'rgba(0, 255, 0, 0.1)',
-          fill: false,
-        },
-        {
-          label: 'Z',
-          data: zData,
-          borderColor: 'blue',
-          backgroundColor: 'rgba(0, 0, 255, 0.1)',
-          fill: false,
-        },
-      ],
+        labels: labels,
+        datasets: [
+    {
+      label: 'X',
+      borderColor: 'red',
+      backgroundColor: 'rgba(255, 0, 0, 0.1)',
+      borderWidth: 1,
+      data: []
+    },
+    {
+      label: 'Y',
+      borderColor: 'green',
+      backgroundColor: 'rgba(0, 255, 0, 0.1)',
+      borderWidth: 1,
+      data: []
+    },
+    {
+      label: 'Z',
+      borderColor: 'blue',
+      backgroundColor: 'rgba(0, 0, 255, 0.1)',
+      borderWidth: 1,
+      data: []
+    },
+        ]
     },
     options: {
-      animation: {
-        duration: 0, // 關閉動畫效果
-      },
-      scales: {
-        xAxes: [{
-          type: 'linear',
-          time: {
-            unit: 'second',
-            displayFormats: {
-              second: 'HH:mm:ss',
-            },
-          },
-          ticks: {
-            source: 'auto',
-            autoSkip: true,
-          },
-        }],
-        yAxes: [{
-          ticks: {
-            beginAtZero: true,
-          },
-        }],
-      },
-      showLines: true,
-    },    
-  });
+        animation: false,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
 
+var dataPoints = 0; // 紀錄資料筆數
+setInterval(() => {
+    // 新增一筆數據
+    chartData.push([x,y,z]);
+
+    // 如果已經有1000筆資料，則刪除第一筆資料
+    if (dataPoints >= maxDataPoints) {
+        myChart.data.datasets.forEach(dataset => {
+            dataset.data.shift(); // 刪除第一筆資料
+        });
+    } else {
+        dataPoints++;
+    }
+
+    // 新增新的數據
+    myChart.data.datasets.forEach((dataset, index) => {
+        dataset.data.push(randomData[index]);
+    });
+    myChart.update(); // 更新圖表
 }, 1000);
+
+
 
 
 
