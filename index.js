@@ -222,7 +222,7 @@ setInterval(() => {
         dataset.data.push(chartData[index]);
     });
     myChart.update(); // 更新圖表
-}, 200);
+}, 50);
 
 
 
