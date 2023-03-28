@@ -207,8 +207,6 @@ var myChart = new Chart(ctx, {
 
 var dataPoints = 0; // 紀錄資料筆數
 setInterval(() => {
-    // 新增一筆數據
-    chartData.push([x,y,z]);
 
     // 如果已經有1000筆資料，則刪除第一筆資料
     if (dataPoints >= maxDataPoints) {
@@ -221,7 +219,7 @@ setInterval(() => {
 
     // 新增新的數據
     myChart.data.datasets.forEach((dataset, index) => {
-        dataset.data.push(randomData[index]);
+        dataset.data.push(chartData[index]);
     });
     myChart.update(); // 更新圖表
 }, 1000);
