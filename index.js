@@ -219,10 +219,7 @@ setInterval(() => {
 
     // 新增新的數據
     myChart.data.datasets.forEach((dataset, index) => {
-      if(chartData !== []){
         dataset.data.push(chartData[index]);
-        chartData = [];
-      }
     });
     myChart.update(); // 更新圖表
 }, 200);
