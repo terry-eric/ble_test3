@@ -87,14 +87,14 @@ function callback(event) {
       document.getElementById("accY").innerHTML = y;
       document.getElementById("accZ").innerHTML = z;
       accelerometerData.push(["accelerometer", Timestamp, x, y, z]);
-      if(chartType === "accelerometerChart"){chartData.push([x,y,z])};
+      if(chartType === "accelerometerChart"){chartData= [x,y,z]};
     }
     if (event.currentTarget.uuid === magnetometerUuid) {
       document.getElementById("magnX").innerHTML = x;
       document.getElementById("magnY").innerHTML = y;
       document.getElementById("magnZ").innerHTML = z;
       magnetometerData.push(["magnetometer", Timestamp, x, y, z])
-      if(chartType === "magnetometerChart"){chartData.push([x,y,z])};
+      if(chartType === "magnetometerChart"){chartData= [x,y,z]};
     }
     if (event.currentTarget.uuid === gyroscopeUuid) {
       x = x/10; y = y/10; z = z/10;
@@ -102,7 +102,7 @@ function callback(event) {
       document.getElementById("gyroY").innerHTML = y;
       document.getElementById("gyroZ").innerHTML = z;
       gyroscopeData.push(["gyroscope", Timestamp, x, y, z]);
-      if(chartType === "gyroscopeChart"){chartData.push([x,y,z])};
+      if(chartType === "gyroscopeChart"){chartData= [x,y,z]};
     }
     log(chartData.toString());
   }
