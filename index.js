@@ -160,7 +160,7 @@ select.addEventListener('change', (event) => {
 
 
 var ctx = document.getElementById('myChart');
-var maxDataPoints = 20; // 最多顯示20筆資料
+var maxDataPoints = 1000; // 最多顯示1000筆資料
 const labels = [];
 for (let i = 0; i <= maxDataPoints; i++) {
     labels.push(i.toString());
@@ -208,7 +208,7 @@ var myChart = new Chart(ctx, {
 var dataPoints = 0; // 紀錄資料筆數
 setInterval(() => {
 
-    // 如果已經有20筆資料，則刪除第一筆資料
+    // 如果已經有1000筆資料，則刪除第一筆資料
     if (dataPoints >= maxDataPoints) {
         myChart.data.datasets.forEach(dataset => {
             dataset.data.shift(); // 刪除第一筆資料
@@ -222,7 +222,7 @@ setInterval(() => {
         dataset.data.push(chartData[index]);
     });
     myChart.update(); // 更新圖表
-}, 200);
+}, 1000);
 
 
 
