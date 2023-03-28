@@ -64,8 +64,8 @@ async function onStartButtonClick() {
 }
 
 function callback(event) {
-  console.log(event.currentTarget)
-  console.log(event.currentTarget.uuid)
+  // console.log(event.currentTarget)
+  // console.log(event.currentTarget.uuid)
   if (event.currentTarget.uuid === accelerometerUuid ||
     event.currentTarget.uuid === magnetometerUuid ||
     event.currentTarget.uuid === gyroscopeUuid) {
@@ -104,7 +104,7 @@ function callback(event) {
       gyroscopeData.push(["gyroscope", Timestamp, x, y, z]);
       if(chartType === "gyroscopeChart"){chartData.push([x,y,z])};
     }
-    
+    console.log(chartData)
   }
 }
 async function onStopButtonClick() {
