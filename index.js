@@ -160,7 +160,7 @@ select.addEventListener('change', (event) => {
 
 
 var ctx = document.getElementById('myChart');
-var maxDataPoints = 1000; // 最多顯示1000筆資料
+var maxDataPoints = 100; // 最多顯示1000筆資料
 const labels = [];
 for (let i = 0; i <= maxDataPoints; i++) {
     labels.push(i.toString());
@@ -222,7 +222,7 @@ setInterval(() => {
         dataset.data.push(chartData[index]);
     });
     myChart.update(); // 更新圖表
-}, 1000);
+}, 200);
 
 
 
