@@ -152,17 +152,11 @@ function bytes4int32(one, two, three, four) {
   return (((four << 8) | three) << 16) | ((two << 8) | one)
 }
 
-
-
+var select = document.getElementById('dataChart');
 // 當選取選單時，設定要顯示的圖表類型
 select.addEventListener('change', (event) => {
   chartType = event.target.value;
 });
-
-
-
-
-
 
 
 var ctx = document.getElementById('myChart');
