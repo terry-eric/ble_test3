@@ -160,7 +160,7 @@ var select = document.getElementById('dataChart');
 select.addEventListener('change', (event) => {
   chartType = event.target.value;
   myChart.data.datasets.forEach(dataset => {
-    // dataset.data = []
+    dataset.data = []
   })
 });
 
