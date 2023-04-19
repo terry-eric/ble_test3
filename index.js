@@ -182,21 +182,25 @@ var myChart = new Chart(ctx, {
         borderColor: 'red',
         backgroundColor: 'rgba(255, 0, 0, 0.1)',
         borderWidth: 1,
-        data: []
+        data: [],
+        tension: 0.4,
+        cubicInterpolationMode: 'monotone'
       },
       {
         label: 'Y',
         borderColor: 'green',
         backgroundColor: 'rgba(0, 255, 0, 0.1)',
         borderWidth: 1,
-        data: []
+        data: [],
+        tension: 0.4,
+        cubicInterpolationMode: 'cubic'
       },
       {
         label: 'Z',
         borderColor: 'blue',
         backgroundColor: 'rgba(0, 0, 255, 0.1)',
         borderWidth: 1,
-        data: []
+        data: [],
       },
     ]
   },
