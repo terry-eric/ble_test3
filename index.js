@@ -161,6 +161,7 @@ select.addEventListener('change', (event) => {
   chartType = event.target.value;
   myChart.data.datasets.forEach(dataset => {
     dataset.data = []
+    dataPoints = 0
   })
 });
 
