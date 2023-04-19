@@ -10,7 +10,7 @@ stopBtn.addEventListener("click", onStopButtonClick);
 
 function log(text) {
   if (log_ele.value.length > 20000)
-    log_ele = ""
+    log_ele.text = ""
   let log_ele = document.querySelector("#log")
   log_ele.value += text + "\n"
 }
