@@ -9,7 +9,10 @@ startBtn.addEventListener("click", onStartButtonClick);
 stopBtn.addEventListener("click", onStopButtonClick);
 
 function log(text) {
-  // document.querySelector("#log").value += text + "\n"
+  if (log_ele.value.length > 20000)
+    log_ele = ""
+  let log_ele = document.querySelector("#log")
+  log_ele.value += text + "\n"
 }
 
 // add new
@@ -157,7 +160,7 @@ var select = document.getElementById('dataChart');
 select.addEventListener('change', (event) => {
   chartType = event.target.value;
   myChart.data.datasets.forEach(dataset => {
-    dataset = []
+    dataset.data = []
   })
 });
 
@@ -226,14 +229,4 @@ setInterval(() => {
   });
   myChart.update(); // 更新圖表
 }, 50);
-
-
-
-
-
-
-
-
-
-
 
