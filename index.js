@@ -11,7 +11,7 @@ stopBtn.addEventListener("click", onStopButtonClick);
 function log(text) {
   let log_ele = document.querySelector("#log")
   if (log_ele.value.length > 20000)
-    log_ele.text = ""
+    log_ele.value = ""
   log_ele.value += text + "\n"
 }
 
@@ -184,7 +184,7 @@ var myChart = new Chart(ctx, {
         borderWidth: 1,
         data: [],
         tension: 0.4,
-        cubicInterpolationMode: 'monotone'
+        cubicInterpolationMode: 'cubic'
       },
       {
         label: 'Y',
@@ -192,7 +192,7 @@ var myChart = new Chart(ctx, {
         backgroundColor: 'rgba(0, 255, 0, 0.1)',
         borderWidth: 1,
         data: [],
-        tension: 0.4,
+        tension: 0.5,
         cubicInterpolationMode: 'cubic'
       },
       {
@@ -201,6 +201,8 @@ var myChart = new Chart(ctx, {
         backgroundColor: 'rgba(0, 0, 255, 0.1)',
         borderWidth: 1,
         data: [],
+        tension: 0.6,
+        cubicInterpolationMode: 'cubic'
       },
     ]
   },
