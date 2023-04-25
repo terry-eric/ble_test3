@@ -66,6 +66,48 @@ async function onStartButtonClick() {
   }
 }
 
+async function onStopButtonClick() {
+  try {
+    // 停止所有 characteristic 的通知功能
+    for (const [index, UuidTarget] of UuidTargets.entries()) {
+      const characteristicTarget = await service.getCharacteristic(UuidTarget);
+      await characteristicTarget.stopNotifications();
+      characteristicTarget.removeEventListener('characteristicvaluechanged',
+        callback);
+    }
+    await server.disconnect(); // 需要手動斷開 GATT 伺服器的連線
+
+    log('> Notifications stopped');
+    const sensordata = [accelerometerData, gyroscopeData, magnetometerData];
+    // const sensordata = [magnetometerData];
+    for (i of sensordata) {
+      let header = ["timestamp", "x", "y", "z"].join(",")
+      let csv = i.map(row => {
+        let data = row.slice(1)
+        data.join(',')
+        return data
+      }).join('\n');
+      csv = `${header}\n${csv}`
+      
+      document.querySelector("#log").innerHTML = '';
+      log(csv);
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      // a.download = 'output.csv';
+      a.download = `${i[0][0]}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  } catch (error) {
+    console.log(error)
+    log('Argh! ' + error);
+  }
+}
+
 function callback(event) {
   // console.log(event.currentTarget)
   // console.log(event.currentTarget.uuid)
@@ -108,37 +150,6 @@ function callback(event) {
       if (chartType === "gyroscopeChart") { chartData = [x, y, z] };
     }
     log(chartData.toString());
-  }
-}
-async function onStopButtonClick() {
-
-  try {
-    // 停止所有 characteristic 的通知功能
-    for (const [index, UuidTarget] of UuidTargets.entries()) {
-      const characteristicTarget = await service.getCharacteristic(UuidTarget);
-      await characteristicTarget.stopNotifications();
-      characteristicTarget.removeEventListener('characteristicvaluechanged',
-        callback);
-    }
-    await server.disconnect(); // 需要手動斷開 GATT 伺服器的連線
-
-    log('> Notifications stopped');
-    const sensordata = [batteryData, accelerometerData, gyroscopeData, magnetometerData];
-    const csv = sensordata.map(row => row.join(',')).join('\n');
-    document.querySelector("#log").innerHTML = '';
-    log(csv);
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'output.csv';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-
-  } catch (error) {
-    log('Argh! ' + error);
   }
 }
 
