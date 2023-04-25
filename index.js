@@ -27,7 +27,7 @@ let pressureUuid = "00100000-0001-11e1-ac36-0002a5d5c51b";
 // 宣告一個包含四個 UUID 的陣列
 let UuidTargets = [batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid];
 let server
-
+let service
 async function onStartButtonClick() {
 
   try {
@@ -42,7 +42,7 @@ async function onStartButtonClick() {
     server = await device.gatt.connect();
 
     log('Getting Service...');
-    const service = await server.getPrimaryService(serviceUuid);
+    service = await server.getPrimaryService(serviceUuid);
 
     log('Getting Characteristic...');
     // add new
