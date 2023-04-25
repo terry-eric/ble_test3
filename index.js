@@ -115,7 +115,7 @@ async function onStopButtonClick() {
   try {
     // 停止所有 characteristic 的通知功能
     for (const [index, UuidTarget] of UuidTargets.entries()) {
-      const characteristicTarget = await server.getCharacteristic(UuidTarget);
+      const characteristicTarget = await service.getCharacteristic(UuidTarget);
       await characteristicTarget.stopNotifications();
       characteristicTarget.removeEventListener('characteristicvaluechanged',
         callback);
