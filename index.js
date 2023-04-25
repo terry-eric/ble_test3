@@ -4,6 +4,7 @@ let startBtn = document.querySelector('#start');
 let stopBtn = document.querySelector('#stop');
 let chartType = "accelerometerChart";
 let chartData = [];
+let flag = false;
 
 startBtn.addEventListener("click", onStartButtonClick);
 stopBtn.addEventListener("click", onStopButtonClick);
@@ -26,10 +27,10 @@ let temperatureUuid = "00040000-0001-11e1-ac36-0002a5d5c51b";
 let pressureUuid = "00100000-0001-11e1-ac36-0002a5d5c51b";
 // 宣告一個包含四個 UUID 的陣列
 let UuidTargets = [batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid];
-let server
-let service
-async function onStartButtonClick() {
+let server;
+let service;
 
+async function onStartButtonClick() {
   try {
     log('Requesting Bluetooth Device...');
     const device = await navigator.bluetooth.requestDevice({
@@ -58,6 +59,8 @@ async function onStartButtonClick() {
 
       // 啟用 characteristic 的通知功能，這樣當 characteristic 的值改變時，就會發送通知
       await characteristicTarget.startNotifications();
+
+      flag = true
     }
 
     log('> Notifications started');
@@ -67,6 +70,7 @@ async function onStartButtonClick() {
 }
 
 async function onStopButtonClick() {
+  flag = false
   try {
     // 停止所有 characteristic 的通知功能
     for (const [index, UuidTarget] of UuidTargets.entries()) {
@@ -76,9 +80,6 @@ async function onStopButtonClick() {
         callback);
     }
     await server.disconnect(); // 需要手動斷開 GATT 伺服器的連線
-
-    //
-    clearInterval(intervalID);
 
     log('> Notifications stopped');
     const sensordata = [accelerometerData, gyroscopeData, magnetometerData];
@@ -234,19 +235,22 @@ var myChart = new Chart(ctx, {
 
 var dataPoints = 0; // 紀錄資料筆數
 const intervalID = setInterval(() => {
-  // 如果已經有1000筆資料，則刪除第一筆資料
-  if (dataPoints >= maxDataPoints) {
-    myChart.data.datasets.forEach(dataset => {
-      dataset.data.shift(); // 刪除第一筆資料
-    });
-  } else {
-    dataPoints++;
-  }
+  if (flag) {
+    // 如果已經有1000筆資料，則刪除第一筆資料
+    if (dataPoints >= maxDataPoints) {
+      myChart.data.datasets.forEach(dataset => {
+        dataset.data.shift(); // 刪除第一筆資料
+      });
+    } else {
+      dataPoints++;
+    }
 
-  // 新增新的數據
-  myChart.data.datasets.forEach((dataset, index) => {
-    dataset.data.push(chartData[index]);
-  });
-  myChart.update(); // 更新圖表
+    // 新增新的數據
+    myChart.data.datasets.forEach((dataset, index) => {
+      dataset.data.push(chartData[index]);
+    });
+    myChart.update(); // 更新圖表
+  }
+  else { }
 }, 50);
 
