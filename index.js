@@ -77,6 +77,9 @@ async function onStopButtonClick() {
     }
     await server.disconnect(); // 需要手動斷開 GATT 伺服器的連線
 
+    //
+    clearInterval(intervalID);
+
     log('> Notifications stopped');
     const sensordata = [accelerometerData, gyroscopeData, magnetometerData];
     // const sensordata = [magnetometerData];
@@ -88,7 +91,7 @@ async function onStopButtonClick() {
         return data
       }).join('\n');
       csv = `${header}\n${csv}`
-      
+
       document.querySelector("#log").innerHTML = '';
       log(csv);
       const blob = new Blob([csv], { type: 'text/csv' });
@@ -230,8 +233,7 @@ var myChart = new Chart(ctx, {
 });
 
 var dataPoints = 0; // 紀錄資料筆數
-setInterval(() => {
-
+const intervalID = setInterval(() => {
   // 如果已經有1000筆資料，則刪除第一筆資料
   if (dataPoints >= maxDataPoints) {
     myChart.data.datasets.forEach(dataset => {
