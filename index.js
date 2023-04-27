@@ -121,11 +121,11 @@ function callback(event) {
     }
     let bytes = a;
 
-    let busvoltage = bytes2int16([bytes[0], bytes[1]])
-    let shuntvoltage = bytes2int16([bytes[2], bytes[3]])
-    let current = bytes2int16([bytes[4], bytes[5]])
-    let loadvoltage = bytes2int16([bytes[6], bytes[7]])
-    let power_W = bytes2int16([bytes[8], bytes[9]])
+    let busvoltage = bytes2int16([bytes[0], bytes[1]])/1000
+    let shuntvoltage = bytes2int16([bytes[2], bytes[3]])/100
+    let current = bytes2int16([bytes[4], bytes[5]])/1000
+    let loadvoltage = bytes2int16([bytes[6], bytes[7]])/100
+    let power_W = bytes2int16([bytes[8], bytes[9]])/10
 
     if (event.currentTarget.uuid === inputUuid) {
       document.getElementById("inputBusvoltage").innerHTML = busvoltage;
