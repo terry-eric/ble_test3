@@ -27,61 +27,36 @@
         <tr>
             <td>
                 <div>
-                    加速度
+                    輸入
                 </div>
             </td>
             <td>
                 <div>
-                    磁力計
+                    輸出
                 </div>
             </td>
-            <td>
-                <div>
-                    陀螺儀
-                </div>
-            </td>
-            <td>
-                <div>
-                    電池
-                </div>
-            </td>
-            <!-- <td>
-                <div>
-                    溫度
-                </div>
-            </td> -->
         </tr>
         <tr>
             <td>
-                <div>accX: <span id="accX">-1</span></div>
-                <div>accY: <span id="accY">-1</span></div>
-                <div>accZ: <span id="accZ">-1</span></div>
+                <div>inputBusvoltage: <span id="inputBusvoltage">-1</span></div>
+                <div>inputShuntvoltage: <span id="inputShuntvoltage">-1</span></div>
+                <div>inputCurrent: <span id="inputCurrent">-1</span></div>
+                <div>inputLoadvoltage: <span id="inputLoadvoltage">-1</span></div>
+                <div>inputPower: <span id="inputPower">-1</span></div>
             </td>
             <td>
-                <div>magnX: <span id="magnX">-1</span></div>
-                <div>magnY: <span id="magnY">-1</span></div>
-                <div>magnZ: <span id="magnZ">-1</span></div>
+                <div>outputBusvoltage: <span id="outputBusvoltage">-1</span></div>
+                <div>outputShuntvoltage: <span id="outputShuntvoltage">-1</span></div>
+                <div>outputCurrent: <span id="outputCurrent">-1</span></div>
+                <div>outputLoadvoltage: <span id="outputLoadvoltage">-1</span></div>
+                <div>outputPower: <span id="outputPower">-1</span></div>
             </td>
-            <td>
-                <div>gyroX: <span id="gyroX">-1</span></div>
-                <div>gyroY: <span id="gyroY">-1</span></div>
-                <div>gyroZ: <span id="gyroZ">-1</span></div>
-            </td>
-            <td>
-                <div>voltage: <span id="batVoltage">-1</span></div>
-                <div>current: <span id="batCurrent">-1</span></div>
-                <div>status: <span id="batStatus">-1</span></div>
-            </td>
-            <!-- <td>
-                <div>temperature: <span id="temperature">-1</span></div>
-            </td> -->
 
         </tr><br>
         <label for="dataChart">選擇生成的圖表：</label>
         <select name="dataChart" id="dataChart">
-            <option value="accelerometerChart">加速度</option>
-            <option value="gyroscopeChart">陀螺儀</option>
-            <option value="magnetometerChart">磁力計</option>
+            <option value="inputChart">輸入</option>
+            <option value="outputChart">輸出</option>
         </select>
 
         <canvas id="myChart" style="width: 100%; height: 300px;"></canvas>
@@ -90,10 +65,6 @@
     <textarea name="" id="log" cols="50" rows="10"></textarea>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="index.js"></script>
-    <script src="Battery.js"></script>
-    <script src="AccelerometerEvent.js"></script>
-    <script src="Pressure.js"></script>
-    <script src="Temperature.js"></script>
 </body>
 
 </html>

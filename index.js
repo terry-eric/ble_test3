@@ -1,8 +1,8 @@
-var battery_Characteristic, accelerometer_Characteristic, magnetometer_Characteristic, gyroscope_Characteristic, temperature_Characteristic;
-const batteryData = [], accelerometerData = [], gyroscopeData = [], magnetometerData = [];
+var input_Characteristic, output_Characteristic;
+const inputData = [], outputData = [];
 let startBtn = document.querySelector('#start');
 let stopBtn = document.querySelector('#stop');
-let chartType = "accelerometerChart";
+let chartType = "inputChart";////
 let chartData = [];
 let flag = false;
 
@@ -17,16 +17,12 @@ function log(text) {
 }
 
 // add new
-let serviceUuid = "00000000-0001-11e1-9ab4-0002a5d5c51b";
-let batteryUuid = "00020000-0001-11e1-ac36-0002a5d5c51b";
-let accelerometerUuid = "00800000-0001-11e1-ac36-0002a5d5c51b";
-let accelerometer_eventUuid = "00000400-0001-11e1-ac36-0002a5d5c51b";//n
-let magnetometerUuid = "00200000-0001-11e1-ac36-0002a5d5c51b";
-let gyroscopeUuid = "00400000-0001-11e1-ac36-0002a5d5c51b";
-let temperatureUuid = "00040000-0001-11e1-ac36-0002a5d5c51b";
-let pressureUuid = "00100000-0001-11e1-ac36-0002a5d5c51b";
-// 宣告一個包含四個 UUID 的陣列
-let UuidTargets = [batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid];
+let serviceUuid = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
+let inputUuid = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
+let outputUuid = "d2912856-de63-11ed-b5ea-0242ac120002";
+
+// 宣告一個包含兩個 UUID 的陣列
+let UuidTargets = [inputUuid, outputUuid];
 let server;
 let service;
 
@@ -35,7 +31,7 @@ async function onStartButtonClick() {
     log('Requesting Bluetooth Device...');
     const device = await navigator.bluetooth.requestDevice({
       // add newDD
-      optionalServices: [serviceUuid, batteryUuid, accelerometerUuid, magnetometerUuid, gyroscopeUuid],
+      optionalServices: [serviceUuid, inputUuid, outputUuid],
       acceptAllDevices: true
     });
 
@@ -82,10 +78,10 @@ async function onStopButtonClick() {
     await server.disconnect(); // 需要手動斷開 GATT 伺服器的連線
 
     log('> Notifications stopped');
-    const sensordata = [accelerometerData, gyroscopeData, magnetometerData];
-    // const sensordata = [magnetometerData];
+    const sensordata = [inputData, outputData];
+    // const sensordata = [outputData];
     for (i of sensordata) {
-      let header = ["timestamp", "x", "y", "z"].join(",")
+      let header = ["busvoltage", "shuntvoltage", "current", "loadvoltage", "power_W"].join(",")
       let csv = i.map(row => {
         let data = row.slice(1)
         data.join(',')
@@ -115,9 +111,8 @@ async function onStopButtonClick() {
 function callback(event) {
   // console.log(event.currentTarget)
   // console.log(event.currentTarget.uuid)
-  if (event.currentTarget.uuid === accelerometerUuid ||
-    event.currentTarget.uuid === magnetometerUuid ||
-    event.currentTarget.uuid === gyroscopeUuid) {
+  if (event.currentTarget.uuid === inputUuid ||
+    event.currentTarget.uuid === outputUuid ) {
 
     let value = event.currentTarget.value;
     let a = [];
@@ -126,32 +121,29 @@ function callback(event) {
     }
     let bytes = a;
 
-    let Timestamp = bytes2int16([bytes[0], bytes[1]])
-    let x = bytes2int16([bytes[2], bytes[3]])
-    let y = bytes2int16([bytes[4], bytes[5]])
-    let z = bytes2int16([bytes[6], bytes[7]])
+    let busvoltage = bytes2int16([bytes[0], bytes[1]])
+    let shuntvoltage = bytes2int16([bytes[2], bytes[3]])
+    let current = bytes2int16([bytes[4], bytes[5]])
+    let loadvoltage = bytes2int16([bytes[6], bytes[7]])
+    let power_W = bytes2int16([bytes[8], bytes[9]])
 
-    if (event.currentTarget.uuid === accelerometerUuid) {
-      document.getElementById("accX").innerHTML = x;
-      document.getElementById("accY").innerHTML = y;
-      document.getElementById("accZ").innerHTML = z;
-      accelerometerData.push(["accelerometer", Timestamp, x, y, z]);
-      if (chartType === "accelerometerChart") { chartData = [x, y, z] };
+    if (event.currentTarget.uuid === inputUuid) {
+      document.getElementById("inputBusvoltage").innerHTML = busvoltage;
+      document.getElementById("inputShuntvoltage").innerHTML = shuntvoltage;
+      document.getElementById("inputCurrent").innerHTML = current;
+      document.getElementById("inputLoadvoltage").innerHTML = loadvoltage;
+      document.getElementById("inputPower").innerHTML = power_W;
+      inputData.push(["input", busvoltage, shuntvoltage, current, loadvoltage, power_W]);
+      if (chartType === "inputChart") { chartData = [busvoltage, shuntvoltage, current, loadvoltage, power_W] };
     }
-    if (event.currentTarget.uuid === magnetometerUuid) {
-      document.getElementById("magnX").innerHTML = x;
-      document.getElementById("magnY").innerHTML = y;
-      document.getElementById("magnZ").innerHTML = z;
-      magnetometerData.push(["magnetometer", Timestamp, x, y, z])
-      if (chartType === "magnetometerChart") { chartData = [x, y, z] };
-    }
-    if (event.currentTarget.uuid === gyroscopeUuid) {
-      x = x / 10; y = y / 10; z = z / 10;
-      document.getElementById("gyroX").innerHTML = x;
-      document.getElementById("gyroY").innerHTML = y;
-      document.getElementById("gyroZ").innerHTML = z;
-      gyroscopeData.push(["gyroscope", Timestamp, x, y, z]);
-      if (chartType === "gyroscopeChart") { chartData = [x, y, z] };
+    if (event.currentTarget.uuid === outputUuid) {
+      document.getElementById("outputBusvoltage").innerHTML = busvoltage;
+      document.getElementById("outputShuntvoltage").innerHTML = shuntvoltage;
+      document.getElementById("outputCurrent").innerHTML = current;
+      document.getElementById("outputLoadvoltage").innerHTML = loadvoltage;
+      document.getElementById("outputPower").innerHTML = power_W;
+      outputData.push(["output", busvoltage, shuntvoltage, current, loadvoltage, power_W]);
+      if (chartType === "outputChart") { chartData = [busvoltage, shuntvoltage, current, loadvoltage, power_W] };
     }
     log(chartData.toString());
   }
@@ -193,26 +185,44 @@ var myChart = new Chart(ctx, {
     labels: labels,
     datasets: [
       {
-        label: 'X',
+        label: 'busvoltage',
         borderColor: 'red',
         backgroundColor: 'rgba(255, 0, 0, 0.1)',
         borderWidth: 1,
         data: [],
-        tension: 0.4,
+        tension: 0.6,
         cubicInterpolationMode: 'cubic'
       },
       {
-        label: 'Y',
+        label: 'shuntvoltage',
         borderColor: 'green',
         backgroundColor: 'rgba(0, 255, 0, 0.1)',
         borderWidth: 1,
         data: [],
-        tension: 0.5,
+        tension: 0.6,
         cubicInterpolationMode: 'cubic'
       },
       {
-        label: 'Z',
+        label: 'current',
         borderColor: 'blue',
+        backgroundColor: 'rgba(0, 0, 255, 0.1)',
+        borderWidth: 1,
+        data: [],
+        tension: 0.6,
+        cubicInterpolationMode: 'cubic'
+      },
+      {
+        label: 'loadvoltage',
+        borderColor: 'purple',
+        backgroundColor: 'rgba(0, 0, 255, 0.1)',
+        borderWidth: 1,
+        data: [],
+        tension: 0.6,
+        cubicInterpolationMode: 'cubic'
+      },
+      {
+        label: 'power_W',
+        borderColor: 'yellow',
         backgroundColor: 'rgba(0, 0, 255, 0.1)',
         borderWidth: 1,
         data: [],
